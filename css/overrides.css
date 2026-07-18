@@ -2,8 +2,6 @@
 .product-number{display:none!important}
 .reason{display:none!important}
 .card-category{color:var(--coral);font-size:12px;font-weight:700;letter-spacing:.07em;margin:0 0 10px}
-.benefit-label{margin-top:13px}
-.ingredient-benefits{font-size:12px;line-height:1.7;margin:0;color:var(--sage)}
 .share{background:var(--coral);color:#fff;margin-right:8px}
 .compact{grid-template-columns:repeat(5,1fr);gap:12px}
 .compact .product-card{padding:14px;box-shadow:none}
