@@ -2,6 +2,4 @@ User-agent: *
 
 Allow: /
 
-Sitemap:
-
-https://glowsciencenotes-source.github.io/30sec-skin-check/sitemap.xml
+Sitemap: https://あなたのドメイン/sitemap.xml

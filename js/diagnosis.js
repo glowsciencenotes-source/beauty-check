@@ -1,873 +1,255 @@
 /*
-==================================================
+====================================================
 
-30秒肌診断 Ver2.0
 Diagnosis Engine
 
-==================================================
+Version 5
+
+====================================================
 */
 
-/*
-----------------------------------
-スコア管理
-----------------------------------
-*/
+"use strict";
 
-const skinScore={
+/*====================================================
+Create Diagnosis
+====================================================*/
 
-    moisture:0,
-    sebum:0,
-    sensitive:0,
-    pore:0,
-    acne:0,
-    aging:0
+function createDiagnosis(){
+
+    const score=createScore();
+
+    const skin=findSkinType(score);
+
+    const ingredients=findIngredients(score);
+
+const result={
+
+    score,
+
+    skin,
+
+    ingredients
 
 };
 
-/*
-----------------------------------
-おすすめ成分
-----------------------------------
-*/
+result.products=
 
-const recommendIngredients=new Set();
-
-/*
-----------------------------------
-避けたい成分
-----------------------------------
-*/
-
-const avoidIngredients=new Set();
-
-/*
-----------------------------------
-回答履歴
-----------------------------------
-*/
-
-let answerHistory=[];
-
-/*
-----------------------------------
-初期化
-----------------------------------
-*/
-
-function resetDiagnosis(){
-
-    skinScore.moisture=0;
-    skinScore.sebum=0;
-    skinScore.sensitive=0;
-    skinScore.pore=0;
-    skinScore.acne=0;
-    skinScore.aging=0;
-
-    recommendIngredients.clear();
-
-    avoidIngredients.clear();
-
-    answerHistory=[];
-
-}
-
-/*
-----------------------------------
-回答登録
-----------------------------------
-*/
-
-function addAnswer(answer){
-
-    answerHistory.push(answer);
-
-    /*
-    点数加算
-    */
-
-    Object.keys(answer.score).forEach(key=>{
-
-        skinScore[key]+=answer.score[key];
-
-    });
-
-    /*
-    おすすめ成分
-    */
-
-    if(answer.ingredients){
-
-        answer.ingredients.forEach(i=>{
-
-            recommendIngredients.add(i);
-
-        });
-
-    }
-
-    /*
-    避けたい成分
-    */
-
-    if(answer.avoid){
-
-        answer.avoid.forEach(i=>{
-
-            avoidIngredients.add(i);
-
-        });
-
-    }
-
-}
-
-/*
-----------------------------------
-100点換算
-----------------------------------
-*/
-
-function normalizeScore(){
-
-    const maxScore={
-
-        moisture:60,
-        sebum:60,
-        sensitive:60,
-        pore:60,
-        acne:60,
-        aging:60
-
-    };
-
-    let result={};
-
-    Object.keys(skinScore).forEach(key=>{
-
-        result[key]=Math.min(
-
-            100,
-
-            Math.round(
-
-                skinScore[key]/maxScore[key]*100
-
-            )
-
-        );
-
-    });
-
-    return result;
-
-}
-/*
-==================================================
-肌タイプ判定エンジン
-==================================================
-*/
-
-function analyzeSkin(){
-
-    const score = normalizeScore();
-
-    let result={
-
-        type:"",
-
-        description:"",
-
-        ingredients:[],
-
-        avoid:[],
-
-        tags:[]
-
-    };
-
-    /*
-    ==========================
-    インナードライ
-    ==========================
-    */
-
-    if(
-
-        score.moisture>=70 &&
-        score.sebum>=60
-
-    ){
-
-        result.type="インナードライ肌";
-
-        result.tags.push("乾燥");
-        result.tags.push("皮脂");
-
-        result.ingredients.push(
-
-            "セラミド",
-            "ヒアルロン酸",
-            "ナイアシンアミド"
-
-        );
-
-        result.avoid.push(
-
-            "アルコール",
-            "高洗浄力"
-
-        );
-
-    }
-
-    /*
-    ==========================
-    乾燥肌
-    ==========================
-    */
-
-    else if(
-
-        score.moisture>=70 &&
-        score.sebum<40
-
-    ){
-
-        result.type="乾燥肌";
-
-        result.tags.push("乾燥");
-
-        result.ingredients.push(
-
-            "セラミド",
-            "スクワラン",
-            "ヒアルロン酸"
-
-        );
-
-        result.avoid.push(
-
-            "エタノール"
-
-        );
-
-    }
-
-    /*
-    ==========================
-    脂性肌
-    ==========================
-    */
-
-    else if(
-
-        score.sebum>=70 &&
-        score.moisture<60
-
-    ){
-
-        result.type="脂性肌";
-
-        result.tags.push("皮脂");
-
-        result.ingredients.push(
-
-            "ナイアシンアミド",
-            "ビタミンC",
-            "サリチル酸"
-
-        );
-
-    }
-
-    /*
-    ==========================
-    混合肌
-    ==========================
-    */
-
-    else if(
-
-        score.sebum>=50 &&
-        score.moisture>=50
-
-    ){
-
-        result.type="混合肌";
-
-        result.tags.push("Tゾーン");
-
-        result.ingredients.push(
-
-            "セラミド",
-            "ナイアシンアミド"
-
-        );
-
-    }
-
-    /*
-    ==========================
-    普通肌
-    ==========================
-    */
-
-    else{
-
-        result.type="普通肌";
-
-        result.ingredients.push(
-
-            "セラミド"
-
-        );
-
-    }
-
-    /*
-    ==========================
-    敏感肌判定
-    ==========================
-    */
-
-    if(score.sensitive>=70){
-
-        result.tags.push("敏感");
-
-        result.ingredients.push(
-
-            "グリチルリチン酸",
-
-            "パンテノール",
-
-            "アラントイン"
-
-        );
-
-        result.avoid.push(
-
-            "香料",
-
-            "メントール",
-
-            "スクラブ"
-
-        );
-
-    }
-
-    /*
-    ==========================
-    ニキビ判定
-    ==========================
-    */
-
-    if(score.acne>=70){
-
-        result.tags.push("ニキビ");
-
-        result.ingredients.push(
-
-            "アゼライン酸",
-
-            "サリチル酸",
-
-            "IPMP"
-
-        );
-
-    }
-
-    /*
-    ==========================
-    毛穴判定
-    ==========================
-    */
-
-    if(score.pore>=70){
-
-        result.tags.push("毛穴");
-
-        result.ingredients.push(
-
-            "ビタミンC",
-
-            "レチノール"
-
-        );
-
-    }
-
-    /*
-    ==========================
-    エイジング
-    ==========================
-    */
-
-    if(score.aging>=70){
-
-        result.tags.push("エイジング");
-
-        result.ingredients.push(
-
-            "レチノール",
-
-            "ナイアシンアミド",
-
-            "ペプチド"
-
-        );
-
-    }
-
-    /*
-    重複除去
-    */
-
-    result.ingredients=[
-
-        ...new Set(result.ingredients)
-
-    ];
-
-    result.avoid=[
-
-        ...new Set(result.avoid)
-
-    ];
+    buildRecommendation(result);
 
     return{
 
         score,
 
-        result
+        skin,
+
+        ingredients,
+
+        products
 
     };
 
 }
-/*
-==================================================
-商品スコアリングエンジン
-Ver2.0
-==================================================
-*/
 
-/*
-products.jsから読み込まれた
+/*====================================================
+Score
+====================================================*/
 
-const products=[]
+function createScore(){
 
-を利用する
-*/
+    const score={
 
-function calculateProductScore(product, diagnosis){
+        moisture:50,
 
-    let score=0;
+        sebum:50,
 
-    /*
-    ----------------------
-    必要成分
-    ----------------------
-    */
+        sensitive:50,
 
-    diagnosis.result.ingredients.forEach(ingredient=>{
+        pore:50,
 
-        if(product.ingredients.includes(ingredient)){
+        acne:50,
 
-            score+=20;
+        aging:50
 
-        }
+    };
 
-    });
+    calculateScores(score);
 
-    /*
-    ----------------------
-    避けたい成分
-    ----------------------
-    */
-
-    diagnosis.result.avoid.forEach(ingredient=>{
-
-        if(product.ingredients.includes(ingredient)){
-
-            score-=30;
-
-        }
-
-    });
-
-    /*
-    ----------------------
-    肌タイプ一致
-    ----------------------
-    */
-
-    if(product.skinTypes){
-
-        if(
-
-            product.skinTypes.includes(
-
-                diagnosis.result.type
-
-            )
-
-        ){
-
-            score+=40;
-
-        }
-
-    }
-
-    /*
-    ----------------------
-    保湿
-    ----------------------
-    */
-
-    if(
-
-        diagnosis.score.moisture>=70 &&
-        product.effects.includes("保湿")
-
-    ){
-
-        score+=15;
-
-    }
-
-    /*
-    ----------------------
-    敏感
-    ----------------------
-    */
-
-    if(
-
-        diagnosis.score.sensitive>=70 &&
-        product.effects.includes("敏感")
-
-    ){
-
-        score+=15;
-
-    }
-
-    /*
-    ----------------------
-    毛穴
-    ----------------------
-    */
-
-    if(
-
-        diagnosis.score.pore>=70 &&
-        product.effects.includes("毛穴")
-
-    ){
-
-        score+=15;
-
-    }
-
-    /*
-    ----------------------
-    ニキビ
-    ----------------------
-    */
-
-    if(
-
-        diagnosis.score.acne>=70 &&
-        product.effects.includes("ニキビ")
-
-    ){
-
-        score+=15;
-
-    }
-
-    /*
-    ----------------------
-    エイジング
-    ----------------------
-    */
-
-    if(
-
-        diagnosis.score.aging>=70 &&
-        product.effects.includes("エイジング")
-
-    ){
-
-        score+=15;
-
-    }
-
-    /*
-    ----------------------
-    医薬部外品
-    ----------------------
-    */
-
-    if(product.quasiDrug){
-
-        score+=5;
-
-    }
-
-    /*
-    ----------------------
-    成分数
-    ----------------------
-    */
-
-    score+=Math.min(
-
-        product.ingredients.length,
-
-        15
-
-    );
+    normalizeScore(score);
 
     return score;
 
 }
 
-/*
-==================================================
-ランキング作成
-==================================================
-*/
+/*====================================================
+Calculate
+====================================================*/
 
-function recommendProducts(products){
+function calculateScores(score){
 
-    const diagnosis=analyzeSkin();
+    App.answers.forEach(answerId=>{
 
-    const ranking=products.map(product=>{
+        const rule=
 
-        return{
+            App.diagnosis.answers[answerId];
 
-            ...product,
+        if(!rule)return;
 
-            matchScore:
+        Object.keys(rule).forEach(key=>{
 
-            calculateProductScore(
+            score[key]+=rule[key];
 
-                product,
+        });
 
-                diagnosis
+    });
+
+}
+
+/*====================================================
+Normalize
+====================================================*/
+
+function normalizeScore(score){
+
+    Object.keys(score).forEach(key=>{
+
+        score[key]=Math.max(
+
+            0,
+
+            Math.min(
+
+                100,
+
+                score[key]
 
             )
 
-        };
+        );
 
     });
 
-    ranking.sort(
-
-        (a,b)=>
-
-        b.matchScore-a.matchScore
-
-    );
-
-    return ranking.slice(0,10);
-
-}
-/*
-==================================================
-診断結果生成
-==================================================
-*/
-
-function createDiagnosisResult(products){
-
-    /*
-    肌診断
-    */
-
-    const diagnosis=analyzeSkin();
-
-    /*
-    商品ランキング
-    */
-
-    const ranking=recommendProducts(products);
-
-    /*
-    結果
-    */
-
-    return{
-
-        skinType:diagnosis.result.type,
-
-        description:diagnosis.result.description,
-
-        score:diagnosis.score,
-
-        tags:diagnosis.result.tags,
-
-        ingredients:diagnosis.result.ingredients,
-
-        avoid:diagnosis.result.avoid,
-
-        products:ranking
-
-    };
-
 }
 
-/*
-==================================================
-ローカル保存
-==================================================
-*/
+/*====================================================
+Skin Type
+====================================================*/
 
-function saveDiagnosis(result){
+function findSkinType(score){
 
-    localStorage.setItem(
+    const list=
 
-        "skinDiagnosis",
+        App.diagnosis.skinTypes;
 
-        JSON.stringify(result)
+    for(const skin of list){
 
-    );
+        if(matchCondition(
 
-}
+            skin.condition,
 
-/*
-==================================================
-読込
-==================================================
-*/
+            score
 
-function loadDiagnosis(){
+        )){
 
-    const data=localStorage.getItem(
-
-        "skinDiagnosis"
-
-    );
-
-    if(!data) return null;
-
-    return JSON.parse(data);
-
-}
-
-/*
-==================================================
-スコア表示用
-==================================================
-*/
-
-function getScoreItems(result){
-
-    return[
-
-        {
-
-            label:"水分量",
-
-            value:result.score.moisture
-
-        },
-
-        {
-
-            label:"皮脂量",
-
-            value:result.score.sebum
-
-        },
-
-        {
-
-            label:"敏感度",
-
-            value:result.score.sensitive
-
-        },
-
-        {
-
-            label:"毛穴",
-
-            value:result.score.pore
-
-        },
-
-        {
-
-            label:"ニキビ",
-
-            value:result.score.acne
-
-        },
-
-        {
-
-            label:"エイジング",
-
-            value:result.score.aging
+            return skin;
 
         }
 
-    ];
+    }
+
+    return list[0];
 
 }
 
-/*
-==================================================
-タグ表示
-==================================================
-*/
+/*====================================================
+Condition
+====================================================*/
 
-function getTags(result){
+function matchCondition(condition,score){
 
-    return result.tags.map(tag=>{
+    return Object.keys(condition)
 
-        return{
+    .every(key=>{
 
-            text:tag
-
-        };
+        return score[key]>=condition[key];
 
     });
 
 }
 
-/*
-==================================================
-おすすめ成分表示
-==================================================
-*/
+/*====================================================
+Ingredients
+====================================================*/
 
-function getIngredientList(result){
+function findIngredients(score){
 
-    return result.ingredients.map(item=>{
+    return App.ingredients.filter(item=>{
 
-        return{
+        return item.condition.every(key=>{
 
-            name:item
+            return score[key]>=60;
 
-        };
+        });
 
     });
 
 }
 
-/*
-==================================================
-おすすめ商品
-==================================================
-*/
 
-function getTopProducts(result){
 
-    return result.products.slice(0,3);
+
+
+/*====================================================
+Comment
+====================================================*/
+
+function createComment(result){
+
+    let text="";
+
+    if(result.score.moisture<40){
+
+        text+="保湿ケアを強化しましょう。";
+
+    }
+
+    if(result.score.sebum>70){
+
+        text+="皮脂コントロールが重要です。";
+
+    }
+
+    if(result.score.sensitive>70){
+
+        text+="低刺激処方をおすすめします。";
+
+    }
+
+    return text;
+
+}
+
+function createDiagnosis(){
+
+    const score = createScore();
+
+    const skin = findSkinType(score);
+
+    const ingredients = findIngredients(score);
+
+    const result = {
+
+        score,
+
+        skin,
+
+        ingredients
+
+    };
+
+    result.products = buildRecommendation(result);
+
+    result.comment = createComment(result);
+
+    return result;
 
 }

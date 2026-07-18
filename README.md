@@ -1,129 +1,51 @@
-# 🍎 30秒肌診断
+# 30秒肌診断
 
-Apple風デザインの肌診断Webアプリです。
+美容成分データベースを利用した無料の肌診断Webアプリです。
 
-## 機能
+## 特徴
 
-- 10問の肌診断
-- 30秒で診断完了
-- 5種類の肌タイプ判定
-- 商品レコメンド
-- Amazon・楽天・Yahooアフィリエイト対応
-- GitHub Pages対応
-- レスポンシブデザイン
+- 約30秒で診断
+- 10〜20問の質問
+- 肌タイプ判定
+- 肌悩み分析
+- おすすめ美容成分表示
+- おすすめ商品表示
+- レスポンシブ対応
+- PWA対応
 
 ---
 
 ## フォルダ構成
 
-```
-30sec-skin-check/
+/
 │
 ├── index.html
-├── README.md
-├── favicon.svg
-├── robots.txt
-├── sitemap.xml
-│
 ├── css/
-│   └── style.css
-│
 ├── js/
-│   └── script.js
-│
 ├── data/
-│   └── products.json
-│
-└── images/
-    ├── logo.svg
-    ├── placeholder.webp
-    └── products/
-```
+├── images/
+├── manifest.json
+├── sw.js
+└── README.md
 
 ---
 
-## GitHub Pages公開
+## 使用技術
 
-1.
-
-GitHubへアップロード
-
-2.
-
-Settings
-
-↓
-
-Pages
-
-3.
-
-Source
-
-```
-Deploy from a branch
-```
-
-4.
-
-Branch
-
-```
-main
-```
-
-5.
-
-Folder
-
-```
-/(root)
-```
-
-6.
-
-Save
-
-数十秒後
-
-```
-https://あなたのID.github.io/30sec-skin-check/
-```
-
-で公開されます。
+- HTML5
+- CSS3
+- JavaScript (ES2023)
+- JSON Database
 
 ---
 
-## 商品追加
+## データ
 
-```
-data/products.json
-```
-
-へ商品を追加してください。
-
-例
-
-```json
-{
- "brand":"キュレル",
- "name":"潤浸保湿フェイスクリーム",
- "skin":["dry","sensitive"]
-}
-```
+- 約250成分
+- 約300商品
 
 ---
 
-## 対応肌タイプ
-
-- Dry
-- Oily
-- Combination
-- Sensitive
-- Normal
-
----
-
-## ライセンス
+## License
 
 MIT License
