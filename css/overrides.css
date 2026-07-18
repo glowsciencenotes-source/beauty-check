@@ -9,4 +9,13 @@
 .compact .brand-name,.compact .category,.compact .ingredient-label,.compact .ingredients,.compact .card-links a{font-size:10px}
 .compact .card-category{font-size:10px;margin-bottom:6px}
 @media(max-width:900px){.compact{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:760px){.share{margin:0 0 12px}.compact{grid-template-columns:1fr}}
+@media(max-width:760px){
+  .share{margin:0 0 12px}
+  .compact{grid-template-columns:1fr}
+  #resultTitle{font-size:clamp(30px,8.5vw,38px);line-height:1.35;letter-spacing:-.03em;text-wrap:balance}
+  #resultTitle .result-type{display:block}
+  .result-description{text-wrap:pretty}
+  .tips{margin-bottom:48px}
+  .tips span{line-height:1.6}
+  .product-card h4,.essential-card h4,.product-name{line-height:1.55;line-break:strict}
+}

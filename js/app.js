@@ -37,7 +37,7 @@ function showResult() {
   const descriptions = { dry: 'うるおいを抱え込む保湿ケアを軸に。洗いすぎを避け、肌をやわらげるアイテムを重ねてみましょう。', combination: 'ベタつきやすい部分と乾きやすい部分が混在しやすい傾向です。軽い保湿をベースに、部分ごとに量を調整するのがコツ。', oily: '皮脂が出やすく、毛穴も気になりやすい傾向です。落としすぎず、みずみずしい保湿と紫外線対策を続けましょう。', normal: '比較的バランスのとれた状態です。季節や生活リズムによる変化を見ながら、保湿とUVケアを基本にしましょう。' };
   result = { type, scores, labels };
   $('#quizScreen').classList.add('hidden'); $('#resultScreen').classList.remove('hidden');
-  $('#resultTitle').textContent = `あなたは「${labels[type]}」`;
+  $('#resultTitle').innerHTML = `あなたは<span class="result-type">「${labels[type]}」</span>`;
   $('#resultDescription').textContent = descriptions[type];
   const tips = { dryness: '化粧水の後は、乳液やクリームでうるおいを閉じ込める', pores: '角質ケアは頻度を守り、保湿もセットで行う', oiliness: '皮脂を取りすぎず、軽い保湿を続ける', dullness: '紫外線対策と保湿を毎日の基本にする', spots: '日焼け止めは十分な量をこまめに塗り直す', sensitivity: '新しい製品は少量から。異常を感じたら使用を中止する', uv: '室内でも紫外線が気になる日はUVケアを取り入れる' };
   const concerns = Object.entries(scores).filter(([key]) => !['dry', 'combination', 'oily', 'normal'].includes(key)).sort((a, b) => b[1] - a[1]).slice(0, 2).map(([key]) => key);
