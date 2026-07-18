@@ -1,23 +1,64 @@
 const questions = [
-  {category:'肌質について',text:'洗顔後、何もつけない状態の肌は？',answers:[['A','全体的につっぱりやすい','dry'],['B','Tゾーンだけベタつきやすい','combination'],['C','全体的にベタつきやすい','oily'],['D','季節で変わる・気にならない','normal']]},
-  {category:'うるおいについて',text:'日中の乾燥・カサつきは気になりますか？',answers:[['A','かなり気になる','dryness'],['B','頬や口元だけ気になる','dryness'],['C','あまり気にならない','normal'],['D','ベタつきの方が気になる','oiliness']]},
-  {category:'肌悩みについて',text:'今いちばん気になることは？',answers:[['A','毛穴の目立ち','pores'],['B','くすんで見えること','dullness'],['C','日焼けによるシミ・そばかす','spots'],['D','肌荒れ・ゆらぎ','sensitivity']]},
-  {category:'肌状態について',text:'生理前や季節の変わり目に肌はゆらぎますか？',answers:[['A','よくゆらぐ','sensitivity'],['B','ときどきゆらぐ','sensitivity'],['C','あまりゆらがない','normal'],['D','皮脂が増えやすい','oiliness']]},
-  {category:'紫外線対策について',text:'日焼け止めを使う頻度は？',answers:[['A','ほぼ毎日','uv'],['B','外出する日だけ','uv'],['C','レジャーのときだけ','uv'],['D','あまり使わない','uv']]},
-  {category:'洗顔について',text:'洗顔後の肌感は？',answers:[['A','つっぱりを感じる','dryness'],['B','さっぱりして心地よい','normal'],['C','すぐにテカる','oiliness'],['D','赤みやヒリつきが出ることがある','sensitivity']]},
-  {category:'生活習慣について',text:'睡眠不足の翌日、肌はどうなりやすいですか？',answers:[['A','カサついて元気がない','dryness'],['B','くすんで見える','dullness'],['C','吹き出物が気になる','oiliness'],['D','特に変わらない','normal']]},
-  {category:'スキンケアについて',text:'使いたいアイテムの使用感は？',answers:[['A','しっとり濃密','dryness'],['B','みずみずしく軽い','normal'],['C','さらっとベタつかない','oiliness'],['D','やさしい使い心地を重視','sensitivity']]},
-  {category:'肌悩みについて',text:'鏡を見て気になるポイントは？',answers:[['A','頬・小鼻の毛穴','pores'],['B','透明感のなさ','dullness'],['C','紫外線ダメージ','spots'],['D','乾燥によるキメの乱れ','dryness']]},
-  {category:'お手入れについて',text:'これから特に意識したいケアは？',answers:[['A','保湿を丁寧にしたい','dryness'],['B','皮脂・毛穴を整えたい','pores'],['C','紫外線対策を続けたい','uv'],['D','刺激を抑えたケアをしたい','sensitivity']]}
+  ['洗顔後、何もつけない状態の肌は？',[['全体的につっぱりやすい','dry'],['Tゾーンだけベタつきやすい','combination'],['全体的にベタつきやすい','oily'],['季節で変わる・気にならない','normal']]],
+  ['日中の乾燥・カサつきは気になりますか？',[['かなり気になる','dryness'],['頬や口元だけ気になる','dryness'],['あまり気にならない','normal'],['ベタつきの方が気になる','oiliness']]],
+  ['今いちばん気になることは？',[['毛穴の目立ち','pores'],['くすんで見えること','dullness'],['日焼けによるシミ・そばかす','spots'],['肌荒れ・ゆらぎ','sensitivity']]],
+  ['生理前や季節の変わり目に肌はゆらぎますか？',[['よくゆらぐ','sensitivity'],['ときどきゆらぐ','sensitivity'],['あまりゆらがない','normal'],['皮脂が増えやすい','oiliness']]],
+  ['日焼け止めを使う頻度は？',[['ほぼ毎日','uv'],['外出する日だけ','uv'],['レジャーのときだけ','uv'],['あまり使わない','uv']]],
+  ['洗顔後の肌感は？',[['つっぱりを感じる','dryness'],['さっぱりして心地よい','normal'],['すぐにテカる','oiliness'],['赤みやヒリつきが出ることがある','sensitivity']]],
+  ['睡眠不足の翌日、肌はどうなりやすいですか？',[['カサついて元気がない','dryness'],['くすんで見える','dullness'],['吹き出物が気になる','oiliness'],['特に変わらない','normal']]],
+  ['使いたいアイテムの使用感は？',[['しっとり濃密','dryness'],['みずみずしく軽い','normal'],['さらっとベタつかない','oiliness'],['やさしい使い心地を重視','sensitivity']]],
+  ['鏡を見て気になるポイントは？',[['頬・小鼻の毛穴','pores'],['透明感のなさ','dullness'],['紫外線ダメージ','spots'],['乾燥によるキメの乱れ','dryness']]],
+  ['これから特に意識したいケアは？',[['保湿を丁寧にしたい','dryness'],['皮脂・毛穴を整えたい','pores'],['紫外線対策を続けたい','uv'],['刺激を抑えたケアをしたい','sensitivity']]]
 ];
-let products=[], current=0, answers=[], filter='すべて';
-const $=s=>document.querySelector(s);
-fetch('data/products.json').then(r=>r.json()).then(data=>products=data).catch(()=>{ $('#startButton').textContent='データを読み込めません'; $('#startButton').disabled=true; });
-$('#startButton').onclick=()=>{ $('#startScreen').classList.add('hidden'); $('#quizScreen').classList.remove('hidden'); renderQuestion(); };
-$('#backButton').onclick=()=>{ if(current){current--;answers.pop();renderQuestion();} };
-$('#restartButton').onclick=()=>location.reload();
-function renderQuestion(){const q=questions[current], percent=(current+1)*10;$('#progressLabel').textContent=`QUESTION ${current+1} / 10`;$('#progressNumber').textContent=`${percent}%`;$('#progressBar').style.width=percent+'%';$('#questionCategory').textContent=q.category;$('#questionText').textContent=q.text;$('#answers').innerHTML=q.answers.map(a=>`<button class="answer" data-value="${a[2]}"><b>${a[0]}</b>${a[1]}</button>`).join('');document.querySelectorAll('.answer').forEach(b=>b.onclick=()=>{answers.push(b.dataset.value);current++;current===questions.length?showResult():renderQuestion();});$('#backButton').hidden=current===0;}
-function showResult(){const scores=answers.reduce((a,v)=>(a[v]=(a[v]||0)+1,a),{});const type=['dry','combination','oily','normal'].sort((a,b)=>(scores[b]||0)-(scores[a]||0))[0];const labels={dry:'乾燥が気になりやすい肌',combination:'混合肌傾向の肌',oily:'皮脂が出やすい肌',normal:'バランスがとれた肌'};const descriptions={dry:'うるおいを抱え込む保湿ケアを軸に。洗いすぎを避け、肌をやわらげるアイテムを重ねてみましょう。',combination:'ベタつきやすい部分と乾きやすい部分が混在しやすい傾向です。軽い保湿をベースに、部分ごとに量を調整するのがコツ。',oily:'皮脂が出やすく、毛穴も気になりやすい傾向です。落としすぎず、みずみずしい保湿と紫外線対策を続けましょう。',normal:'比較的バランスのとれた状態です。季節や生活リズムによる変化を見ながら、保湿とUVケアを基本にしましょう。'};$('#quizScreen').classList.add('hidden');$('#resultScreen').classList.remove('hidden');$('#resultTitle').textContent=`あなたは「${labels[type]}」`;$('#resultDescription').textContent=descriptions[type];const topConcerns=Object.entries(scores).filter(([k])=>!['dry','combination','oily','normal'].includes(k)).sort((a,b)=>b[1]-a[1]).slice(0,2).map(x=>x[0]);const tipMap={dryness:'化粧水の後は、乳液やクリームでうるおいを閉じ込める',pores:'角質ケアは頻度を守り、保湿もセットで行う',oiliness:'皮脂を取りすぎず、軽い保湿を続ける',dullness:'紫外線対策と保湿を毎日の基本にする',spots:'日焼け止めは十分な量をこまめに塗り直す',sensitivity:'新しい製品は少量から。異常を感じたら使用を中止する',uv:'室内でも紫外線が気になる日はUVケアを取り入れる'};$('#tips').innerHTML=[...topConcerns,'uv'].slice(0,3).map(x=>`<span>✓ ${tipMap[x]}</span>`).join('');const ranked=products.map(p=>({p,score:(p.types.includes(type)?5:0)+p.concerns.reduce((n,c)=>n+(scores[c]||0),0)})).sort((a,b)=>b.score-a.score).slice(0,3).map(x=>x.p);$('#recommendationList').innerHTML=ranked.map(p=>card(p,true,type)).join('');renderFilters();renderProducts(type);window.scrollTo({top:0,behavior:'smooth'});}
-function card(p,recommended,type){const q=encodeURIComponent(`${p.brand} ${p.name}`);const affiliate=`https://www.amazon.co.jp/s?k=${q}&tag=YOUR_ASSOCIATE_TAG-22`;const reason=recommended?`<p class="reason">あなたの「${type==='dry'?'保湿':type==='oily'?'皮脂・毛穴':type==='combination'?'部分的な乾燥と皮脂':'肌バランス'}」の傾向に合わせて選びました。</p>`:'';return `<article class="product-card ${recommended?'recommended':''}"><div class="product-number">${String(products.indexOf(p)+1).padStart(2,'0')}</div><p class="brand-name">${p.brand}</p><h4>${p.name}</h4><p class="category">${p.category}</p><p class="ingredient-label">主な配合成分</p><p class="ingredients">${p.ingredients}</p>${reason}<div class="card-links"><a href="${p.official}" target="_blank" rel="noopener sponsored">公式情報</a><a class="affiliate" href="${affiliate}" target="_blank" rel="noopener sponsored">購入リンク →</a></div></article>`;}
-function renderFilters(){const names=['すべて',...new Set(products.map(p=>p.category))];$('#filters').innerHTML=names.map(n=>`<button class="filter ${n===filter?'active':''}" data-filter="${n}">${n}</button>`).join('');document.querySelectorAll('.filter').forEach(b=>b.onclick=()=>{filter=b.dataset.filter;renderFilters();renderProducts();});}
-function renderProducts(type='normal'){const list=filter==='すべて'?products:products.filter(p=>p.category===filter);$('#allProductList').innerHTML=list.map(p=>card(p,false,type)).join('');}
+
+const $ = selector => document.querySelector(selector);
+let products = [], current = 0, answers = [], filter = 'すべて', result;
+fetch('data/products.json').then(r => r.json()).then(data => products = data).catch(() => { $('#startButton').textContent = 'データを読み込めません'; $('#startButton').disabled = true; });
+$('#startButton').onclick = () => { $('#startScreen').classList.add('hidden'); $('#quizScreen').classList.remove('hidden'); renderQuestion(); };
+$('#backButton').onclick = () => { if (current) { current--; answers.pop(); renderQuestion(); } };
+$('#restartButton').onclick = () => location.reload();
+
+function renderQuestion() {
+  const [text, choices] = questions[current], percent = (current + 1) * 10;
+  $('#progressLabel').textContent = `QUESTION ${current + 1} / 10`;
+  $('#progressNumber').textContent = `${percent}%`;
+  $('#progressBar').style.width = `${percent}%`;
+  $('#questionCategory').textContent = '肌の状態について';
+  $('#questionText').textContent = text;
+  $('#answers').innerHTML = choices.map(([label, value], i) => `<button class="answer" data-value="${value}"><b>${'ABCD'[i]}</b>${label}</button>`).join('');
+  document.querySelectorAll('.answer').forEach(button => button.onclick = () => { answers.push(button.dataset.value); current++; current === questions.length ? showResult() : renderQuestion(); });
+  $('#backButton').hidden = current === 0;
+}
+
+function showResult() {
+  const scores = answers.reduce((sum, key) => (sum[key] = (sum[key] || 0) + 1, sum), {});
+  const type = ['dry', 'combination', 'oily', 'normal'].sort((a, b) => (scores[b] || 0) - (scores[a] || 0))[0];
+  const labels = { dry: '乾燥が気になりやすい肌', combination: '混合肌傾向の肌', oily: '皮脂が出やすい肌', normal: 'バランスがとれた肌' };
+  const descriptions = { dry: 'うるおいを抱え込む保湿ケアを軸に。洗いすぎを避け、肌をやわらげるアイテムを重ねてみましょう。', combination: 'ベタつきやすい部分と乾きやすい部分が混在しやすい傾向です。軽い保湿をベースに、部分ごとに量を調整するのがコツ。', oily: '皮脂が出やすく、毛穴も気になりやすい傾向です。落としすぎず、みずみずしい保湿と紫外線対策を続けましょう。', normal: '比較的バランスのとれた状態です。季節や生活リズムによる変化を見ながら、保湿とUVケアを基本にしましょう。' };
+  result = { type, scores, labels };
+  $('#quizScreen').classList.add('hidden'); $('#resultScreen').classList.remove('hidden');
+  $('#resultTitle').textContent = `あなたは「${labels[type]}」`;
+  $('#resultDescription').textContent = descriptions[type];
+  const tips = { dryness: '化粧水の後は、乳液やクリームでうるおいを閉じ込める', pores: '角質ケアは頻度を守り、保湿もセットで行う', oiliness: '皮脂を取りすぎず、軽い保湿を続ける', dullness: '紫外線対策と保湿を毎日の基本にする', spots: '日焼け止めは十分な量をこまめに塗り直す', sensitivity: '新しい製品は少量から。異常を感じたら使用を中止する', uv: '室内でも紫外線が気になる日はUVケアを取り入れる' };
+  const concerns = Object.entries(scores).filter(([key]) => !['dry', 'combination', 'oily', 'normal'].includes(key)).sort((a, b) => b[1] - a[1]).slice(0, 2).map(([key]) => key);
+  $('#tips').innerHTML = [...concerns, 'uv'].slice(0, 3).map(key => `<span>✓ ${tips[key]}</span>`).join('');
+  renderEssentials();
+  const ranked = rankProducts(products).slice(0, 3);
+  $('#recommendationList').innerHTML = ranked.map(product => productCard(product, true)).join('');
+  renderFilters(); renderProducts(); window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function rankProducts(list) { return list.map(product => ({ product, score: (product.types.includes(result.type) ? 5 : 0) + product.concerns.reduce((n, concern) => n + (result.scores[concern] || 0), 0) })).sort((a, b) => b.score - a.score).map(item => item.product); }
+function productCard(product, recommended = false) {
+  const query = encodeURIComponent(`${product.brand} ${product.name}`);
+  const affiliate = `https://www.amazon.co.jp/s?k=${query}&tag=YOUR_ASSOCIATE_TAG-22`;
+  const reason = recommended ? `<p class="reason">あなたの肌傾向に合わせて選びました。</p>` : '';
+  return `<article class="product-card ${recommended ? 'recommended' : ''}"><p class="brand-name">${product.brand}</p><h4>${product.name}</h4><p class="category">${product.category}</p><p class="ingredient-label">主な配合成分</p><p class="ingredients">${product.ingredients}</p>${reason}<div class="card-links"><a href="${product.official}" target="_blank" rel="noopener sponsored">公式情報</a><a class="affiliate" href="${affiliate}" target="_blank" rel="noopener sponsored">購入リンク →</a></div></article>`;
+}
+function renderEssentials() {
+  const steps = [['クレンジング', 'STEP 01｜落とす'], ['洗顔', 'STEP 02｜洗う'], ['UVケア', 'STEP 03｜守る']];
+  $('#essentialList').innerHTML = steps.map(([category, step]) => { const product = rankProducts(products.filter(item => item.category === category))[0]; return `<article class="essential-card"><p class="step-label">${step}</p><h4>${category}</h4><p class="brand-name">${product.brand}</p><p class="product-name">${product.name}</p><p class="ingredient-label">主な配合成分</p><p class="ingredients">${product.ingredients}</p><div class="card-links"><a href="${product.official}" target="_blank" rel="noopener sponsored">公式情報</a></div></article>`; }).join('');
+}
+function renderFilters() { const names = ['すべて', ...new Set(products.map(product => product.category))]; $('#filters').innerHTML = names.map(name => `<button class="filter ${name === filter ? 'active' : ''}" data-filter="${name}">${name}</button>`).join(''); document.querySelectorAll('.filter').forEach(button => button.onclick = () => { filter = button.dataset.filter; renderFilters(); renderProducts(); }); }
+function renderProducts() { const list = filter === 'すべて' ? products : products.filter(product => product.category === filter); $('#allProductList').innerHTML = list.map(product => productCard(product)).join(''); }
+$('#shareButton').onclick = async () => { if (!result) return; const text = `30秒 肌チェックの結果は「${result.labels[result.type]}」でした。\n自分に合うスキンケアをチェック → ${location.href}`; try { if (navigator.share) await navigator.share({ title: '30秒 肌チェック', text, url: location.href }); else { await navigator.clipboard.writeText(text); $('#shareButton').textContent = '結果をコピーしました ✓'; setTimeout(() => $('#shareButton').textContent = '結果をシェアする ↗', 2200); } } catch (error) { if (error.name !== 'AbortError') window.prompt('この内容をコピーしてシェアできます', text); } };
