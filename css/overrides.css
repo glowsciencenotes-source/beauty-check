@@ -9,5 +9,6 @@
 .step-label{font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--sage);margin:0}
 .essential-card h4{font-size:22px;margin:7px 0 12px}
 .essential-card .product-name{font-size:15px;line-height:1.5;margin:4px 0}
+.essential-description{font-size:12px;line-height:1.7;color:var(--muted);min-height:62px;margin:0 0 18px}
 .share{background:var(--coral);color:#fff;margin-right:8px}
 @media(max-width:760px){.essentials{padding-top:35px;margin-top:38px}.essential-grid{grid-template-columns:1fr}.share{margin:0 0 12px}}
