@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "brand": "キュレル",
+    "name": "潤浸保湿 化粧水 III",
+    "skin": "dry",
+    "price": "1980",
+    "image": "images/curel.jpg",
+    "amazon": "https://amzn.to/xxxxx",
+    "rakuten": "https://example.com/rakuten1",
+    "yahoo": "https://example.com/yahoo1"
+  },
+  {
+    "id": 2,
+    "brand": "ラ ロッシュ ポゼ",
+    "name": "トレリアン",
+    "skin": "sensitive",
+    "price": "3960",
+    "image": "images/lrp.jpg",
+    "amazon": "https://amzn.to/yyyyy",
+    "rakuten": "https://example.com/rakuten2",
+    "yahoo": "https://example.com/yahoo2"
+  },
+  {
+    "id": 3,
+    "brand": "オルビス",
+    "name": "クリアフル ローション",
+    "skin": "oily",
+    "price": "1650",
+    "image": "images/orbis.jpg",
+    "amazon": "https://amzn.to/zzzzz",
+    "rakuten": "https://example.com/rakuten3",
+    "yahoo": "https://example.com/yahoo3"
+  },
+  {
+    "id": 4,
+    "brand": "無印良品",
+    "name": "敏感肌用化粧水 高保湿",
+    "skin": "normal",
+    "price": "790",
+    "image": "images/muji.jpg",
+    "amazon": "https://amzn.to/aaaaa",
+    "rakuten": "https://example.com/rakuten4",
+    "yahoo": "https://example.com/yahoo4"
+  }
+]
