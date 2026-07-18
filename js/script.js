@@ -228,11 +228,30 @@ function selectAnswer(index){
         btn.classList.remove("selected");
     });
 
+    // 選択状態にする
     document
         .querySelectorAll(".answer")[index]
         .classList.add("selected");
 
+    // 回答を保存
     answers[currentQuestion]=index;
+
+    // 0.3秒後に自動で次へ
+    setTimeout(() => {
+
+        if(currentQuestion < questions.length - 1){
+
+            currentQuestion++;
+            renderQuestion();
+            restoreAnswer();
+
+        }else{
+
+            calculateScore();
+
+        }
+
+    },300);
 
 }
 
@@ -454,7 +473,7 @@ async function showResult(){
     });
 
     const skin=skinTypes[resultType];
-
+    saveResult(resultType);
     document.getElementById("skinType").textContent=
         "あなたは「"+skin.title+"」です";
 
@@ -636,6 +655,50 @@ document
 
         alert("URLをコピーしました。");
 
+    }
+
+});
+/* ==========================================
+   Save Result
+========================================== */
+
+function saveResult(type){
+
+    const data = {
+        skinType: type,
+        date: new Date().toISOString()
+    };
+
+    localStorage.setItem(
+        "skinCheckResult",
+        JSON.stringify(data)
+    );
+
+}
+
+/* ==========================================
+   Load Result
+========================================== */
+
+function loadSavedResult(){
+
+    const data = localStorage.getItem("skinCheckResult");
+
+    if(!data) return null;
+
+    return JSON.parse(data);
+
+}
+/* ==========================================
+   Save / Load Result
+========================================== */
+
+window.addEventListener("load", () => {
+
+    const saved = loadSavedResult();
+
+    if (saved) {
+        console.log("前回の診断結果:", saved.skinType);
     }
 
 });
