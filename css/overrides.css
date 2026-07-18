@@ -14,6 +14,7 @@
   .compact{grid-template-columns:1fr}
   #resultTitle{font-size:clamp(30px,8.5vw,38px);line-height:1.35;letter-spacing:-.03em;text-wrap:balance}
   #resultTitle .result-type{display:block}
+  #recommendTitle span{display:block}
   .result-description{text-wrap:pretty}
   .tips{margin-bottom:48px}
   .tips span{line-height:1.6}
