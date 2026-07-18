@@ -43,7 +43,8 @@ function showResult() {
   const concerns = Object.entries(scores).filter(([key]) => !['dry', 'combination', 'oily', 'normal'].includes(key)).sort((a, b) => b[1] - a[1]).slice(0, 2).map(([key]) => key);
   $('#tips').innerHTML = [...concerns, 'uv'].slice(0, 3).map(key => `<span>✓ ${tips[key]}</span>`).join('');
   renderEssentials();
-  const ranked = rankProducts(products).slice(0, 3);
+  const recommendedCategories = ['クレンジング', '洗顔', 'UVケア'];
+  const ranked = recommendedCategories.map(category => rankProducts(products.filter(product => product.category === category))[0]);
   $('#recommendationList').innerHTML = ranked.map(product => productCard(product, true)).join('');
   renderFilters(); renderProducts(); window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -53,7 +54,7 @@ function productCard(product, recommended = false) {
   const query = encodeURIComponent(`${product.brand} ${product.name}`);
   const affiliate = `https://www.amazon.co.jp/s?k=${query}&tag=YOUR_ASSOCIATE_TAG-22`;
   const reason = recommended ? `<p class="reason">あなたの肌傾向に合わせて選びました。</p>` : '';
-  return `<article class="product-card ${recommended ? 'recommended' : ''}"><p class="brand-name">${product.brand}</p><h4>${product.name}</h4><p class="category">${product.category}</p><p class="ingredient-label">主な配合成分</p><p class="ingredients">${product.ingredients}</p>${reason}<div class="card-links"><a href="${product.official}" target="_blank" rel="noopener sponsored">公式情報</a><a class="affiliate" href="${affiliate}" target="_blank" rel="noopener sponsored">購入リンク →</a></div></article>`;
+  return `<article class="product-card ${recommended ? 'recommended' : ''}"><p class="category card-category">${product.category}</p><p class="brand-name">${product.brand}</p><h4>${product.name}</h4><p class="ingredient-label">主な配合成分</p><p class="ingredients">${product.ingredients}</p>${reason}<div class="card-links"><a href="${product.official}" target="_blank" rel="noopener sponsored">公式情報</a><a class="affiliate" href="${affiliate}" target="_blank" rel="noopener sponsored">購入リンク →</a></div></article>`;
 }
 function renderEssentials() {
   const steps = [['クレンジング', 'STEP 01｜落とす'], ['洗顔', 'STEP 02｜洗う'], ['UVケア', 'STEP 03｜守る']];
