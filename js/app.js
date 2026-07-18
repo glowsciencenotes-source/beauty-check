@@ -13,6 +13,13 @@ const questions = [
 
 const $ = selector => document.querySelector(selector);
 let products = [], current = 0, answers = [], result;
+const ingredientRoleMap = [
+  ['酸化亜鉛', '紫外線から肌を守る'], ['メギゾリル', '紫外線から肌を守る'],
+  ['ヒアルロン酸', 'うるおいを保つ'], ['グリセリン', 'うるおいを保つ'], ['スクワラン', 'うるおいを保つ'],
+  ['ナイアシンアミド', '肌をすこやかに整える'], ['ビタミンC', '肌をすこやかに整える'], ['アスコルビン酸', '肌をすこやかに整える'],
+  ['アラントイン', '肌をすこやかに保つ'], ['グリチルリチン酸', '肌をすこやかに保つ'], ['パンテノール', '保湿・整肌'],
+  ['ツボクサ', '肌をすこやかに整える'], ['セラミド', 'うるおいを保つ'], ['マンデル酸', 'なめらかな肌印象を目指すケア']
+];
 fetch('data/products.json?v=20260718-6').then(r => r.json()).then(data => products = data).catch(() => { $('#startButton').textContent = 'データを読み込めません'; $('#startButton').disabled = true; });
 $('#startButton').onclick = () => { $('#startScreen').classList.add('hidden'); $('#quizScreen').classList.remove('hidden'); renderQuestion(); };
 $('#backButton').onclick = () => { if (current) { current--; answers.pop(); renderQuestion(); } };
@@ -54,7 +61,12 @@ function uniqueCategoryRecommendations() {
 }
 function productCard(product, recommended = false) {
   const purchaseLink = product.roomUrl ? `<div class="card-links"><a class="affiliate" href="${product.roomUrl}" target="_blank" rel="noopener sponsored">楽天ROOMで見る →</a></div>` : '';
-  return `<article class="product-card ${recommended ? 'recommended' : ''}"><p class="category card-category">${product.category}</p><p class="brand-name">${product.brand}</p><h4>${product.name}</h4><p class="ingredient-label">主な配合成分</p><p class="ingredients">${product.ingredients}</p>${purchaseLink}</article>`;
+  const roles = getIngredientRoles(product.ingredients);
+  return `<article class="product-card ${recommended ? 'recommended' : ''}"><p class="category card-category">${product.category}</p><p class="brand-name">${product.brand}</p><h4>${product.name}</h4><p class="ingredient-label">主な配合成分</p><p class="ingredients">${product.ingredients}</p><p class="ingredient-label benefit-label">期待される働き</p><p class="ingredient-benefits">${roles}</p>${purchaseLink}</article>`;
+}
+function getIngredientRoles(ingredients) {
+  const roles = ingredientRoleMap.filter(([name]) => ingredients.includes(name)).map(([, role]) => role);
+  return [...new Set(roles)].slice(0, 2).join('・') || '保湿や肌をすこやかに整えるためのケア';
 }
 function renderProducts() { $('#allProductList').innerHTML = rankProducts(products).slice(0, 5).map(product => productCard(product)).join(''); }
 $('#shareButton').onclick = async () => { if (!result) return; const message = `30秒 肌チェックの結果は「${result.labels[result.type]}」でした。\n自分に合うスキンケアをチェック`; const copyText = `${message}\n${location.href}`; try { if (navigator.share) await navigator.share({ title: '30秒 肌チェック', text: message, url: location.href }); else { await navigator.clipboard.writeText(copyText); $('#shareButton').textContent = '結果をコピーしました ✓'; setTimeout(() => $('#shareButton').textContent = '結果をシェアする ↗', 2200); } } catch (error) { if (error.name !== 'AbortError') window.prompt('この内容をコピーしてシェアできます', copyText); } };
