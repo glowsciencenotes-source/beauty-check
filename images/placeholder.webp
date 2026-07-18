@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
-  <rect width="600" height="600" fill="#f5f5f7"/>
-  <text x="300" y="290" text-anchor="middle" font-size="40" fill="#999">
-    No Image
-  </text>
-  <text x="300" y="340" text-anchor="middle" font-size="28" fill="#bbb">
-    30秒肌診断
-  </text>
-</svg>
