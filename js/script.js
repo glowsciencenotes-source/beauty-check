@@ -228,21 +228,22 @@ function selectAnswer(index){
         btn.classList.remove("selected");
     });
 
-    // 選択状態にする
-    document
-        .querySelectorAll(".answer")[index]
+    // 選択したボタンを光らせる
+    document.querySelectorAll(".answer")[index]
         .classList.add("selected");
 
-    // 回答を保存
+    // 回答保存
     answers[currentQuestion]=index;
 
-    // 0.3秒後に自動で次へ
+    // 0.3秒後に自動で次の質問へ
     setTimeout(() => {
 
         if(currentQuestion < questions.length - 1){
 
             currentQuestion++;
+
             renderQuestion();
+
             restoreAnswer();
 
         }else{
@@ -255,35 +256,7 @@ function selectAnswer(index){
 
 }
 
-/* ==========================================
-   Next
-========================================== */
 
-nextBtn.addEventListener("click",()=>{
-
-    if(answers[currentQuestion]===undefined){
-
-        alert("回答を選択してください。");
-
-        return;
-
-    }
-
-    currentQuestion++;
-
-    if(currentQuestion>=questions.length){
-
-        calculateScore();
-
-        return;
-
-    }
-
-    renderQuestion();
-
-    restoreAnswer();
-
-});
 
 /* ==========================================
    Previous
