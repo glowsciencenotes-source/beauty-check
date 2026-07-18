@@ -53,7 +53,7 @@ function uniqueCategoryRecommendations() {
   return rankProducts(bestByCategory).slice(0, 3);
 }
 function productCard(product, recommended = false) {
-  const purchaseLink = product.roomUrl ? `<div class="card-links"><a class="affiliate" href="${product.roomUrl}" target="_blank" rel="noopener sponsored">楽天ROOMで見る →</a></div>` : '';
+  const purchaseLink = product.roomUrl ? `<div class="card-links"><a class="affiliate" href="${product.roomUrl}" target="_blank" rel="noopener sponsored">楽天で見る →</a></div>` : '';
   return `<article class="product-card ${recommended ? 'recommended' : ''}"><p class="category card-category">${product.category}</p><p class="brand-name">${product.brand}</p><h4>${product.name}</h4><p class="ingredient-label">主な配合成分</p><p class="ingredients">${product.ingredients}</p>${purchaseLink}</article>`;
 }
 function renderProducts() { $('#allProductList').innerHTML = rankProducts(products).slice(0, 5).map(product => productCard(product)).join(''); }
