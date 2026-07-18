@@ -54,7 +54,7 @@ function uniqueCategoryRecommendations() {
 }
 function productCard(product, recommended = false) {
   const query = encodeURIComponent(`${product.brand} ${product.name}`);
-  const affiliate = `https://www.amazon.co.jp/s?k=${query}&tag=YOUR_ASSOCIATE_TAG-22`;
+  const affiliate = product.roomUrl || `https://www.amazon.co.jp/s?k=${query}&tag=YOUR_ASSOCIATE_TAG-22`;
   return `<article class="product-card ${recommended ? 'recommended' : ''}"><p class="category card-category">${product.category}</p><p class="brand-name">${product.brand}</p><h4>${product.name}</h4><p class="ingredient-label">主な配合成分</p><p class="ingredients">${product.ingredients}</p><div class="card-links"><a class="affiliate" href="${affiliate}" target="_blank" rel="noopener sponsored">購入リンク →</a></div></article>`;
 }
 function renderProducts() { $('#allProductList').innerHTML = rankProducts(products).slice(0, 5).map(product => productCard(product)).join(''); }
