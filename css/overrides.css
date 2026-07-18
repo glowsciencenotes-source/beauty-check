@@ -13,7 +13,7 @@
   .share{margin:0 0 12px}
   .compact{grid-template-columns:1fr}
   #resultTitle{font-size:clamp(30px,8.5vw,38px);line-height:1.35;letter-spacing:-.03em;text-wrap:balance}
-  #resultTitle .result-type{display:block}
+  #resultTitle .result-type{display:block;font-size:clamp(18px,6vw,24px);line-height:1.45;letter-spacing:-.04em;white-space:nowrap}
   #recommendTitle span{display:block}
   .result-description{text-wrap:pretty}
   .tips{margin-bottom:48px}
