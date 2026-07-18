@@ -42,20 +42,21 @@ function showResult() {
   const tips = { dryness: '化粧水の後は、乳液やクリームでうるおいを閉じ込める', pores: '角質ケアは頻度を守り、保湿もセットで行う', oiliness: '皮脂を取りすぎず、軽い保湿を続ける', dullness: '紫外線対策と保湿を毎日の基本にする', spots: '日焼け止めは十分な量をこまめに塗り直す', sensitivity: '新しい製品は少量から。異常を感じたら使用を中止する', uv: '室内でも紫外線が気になる日はUVケアを取り入れる' };
   const concerns = Object.entries(scores).filter(([key]) => !['dry', 'combination', 'oily', 'normal'].includes(key)).sort((a, b) => b[1] - a[1]).slice(0, 2).map(([key]) => key);
   $('#tips').innerHTML = [...new Set([...concerns, 'uv'])].slice(0, 3).map(key => `<span>✓ ${tips[key]}</span>`).join('');
-  renderEssentials();
+  const recommended = uniqueCategoryRecommendations();
+  $('#recommendationList').innerHTML = recommended.map(product => productCard(product, true)).join('');
   renderFilters(); renderProducts(); window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function rankProducts(list) { return list.map(product => ({ product, score: (product.types.includes(result.type) ? 5 : 0) + product.concerns.reduce((n, concern) => n + (result.scores[concern] || 0), 0) })).sort((a, b) => b.score - a.score).map(item => item.product); }
+function uniqueCategoryRecommendations() {
+  const bestByCategory = [...new Set(products.map(product => product.category))].map(category => rankProducts(products.filter(product => product.category === category))[0]);
+  return rankProducts(bestByCategory).slice(0, 3);
+}
 function productCard(product, recommended = false) {
   const query = encodeURIComponent(`${product.brand} ${product.name}`);
   const affiliate = `https://www.amazon.co.jp/s?k=${query}&tag=YOUR_ASSOCIATE_TAG-22`;
   const reason = recommended ? `<p class="reason">あなたの肌傾向に合わせて選びました。</p>` : '';
   return `<article class="product-card ${recommended ? 'recommended' : ''}"><p class="category card-category">${product.category}</p><p class="brand-name">${product.brand}</p><h4>${product.name}</h4><p class="ingredient-label">主な配合成分</p><p class="ingredients">${product.ingredients}</p>${reason}<div class="card-links"><a class="affiliate" href="${affiliate}" target="_blank" rel="noopener sponsored">購入リンク →</a></div></article>`;
-}
-function renderEssentials() {
-  const steps = [['クレンジング', 'STEP 01｜落とす', 'メイクや皮脂汚れをすっきり落とし、次の保湿ケアがなじみやすい肌へ整えます。'], ['洗顔', 'STEP 02｜洗う', '余分な皮脂や汚れをやさしく洗い流し、清潔で心地よい肌を保つための基本ケアです。'], ['UVケア', 'STEP 03｜守る', '紫外線による乾燥を防ぐために、毎日のスキンケアの仕上げとして取り入れましょう。']];
-  $('#essentialList').innerHTML = steps.map(([category, step, description]) => { const product = rankProducts(products.filter(item => item.category === category))[0]; const query = encodeURIComponent(`${product.brand} ${product.name}`); const affiliate = `https://www.amazon.co.jp/s?k=${query}&tag=YOUR_ASSOCIATE_TAG-22`; return `<article class="essential-card"><p class="step-label">${step}</p><h4>${category}</h4><p class="essential-description">${description}</p><p class="brand-name">${product.brand}</p><p class="product-name">${product.name}</p><p class="ingredient-label">主な配合成分</p><p class="ingredients">${product.ingredients}</p><div class="card-links"><a class="affiliate" href="${affiliate}" target="_blank" rel="noopener sponsored">購入リンク →</a></div></article>`; }).join('');
 }
 function renderFilters() { const names = ['すべて', ...new Set(products.map(product => product.category))]; $('#filters').innerHTML = names.map(name => `<button class="filter ${name === filter ? 'active' : ''}" data-filter="${name}">${name}</button>`).join(''); document.querySelectorAll('.filter').forEach(button => button.onclick = () => { filter = button.dataset.filter; renderFilters(); renderProducts(); }); }
 function renderProducts() { const list = filter === 'すべて' ? products : products.filter(product => product.category === filter); $('#allProductList').innerHTML = list.map(product => productCard(product)).join(''); }
