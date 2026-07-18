@@ -13,7 +13,7 @@ const questions = [
 
 const $ = selector => document.querySelector(selector);
 let products = [], current = 0, answers = [], result;
-fetch('data/products.json?v=20260718-3').then(r => r.json()).then(data => products = data).catch(() => { $('#startButton').textContent = 'データを読み込めません'; $('#startButton').disabled = true; });
+fetch('data/products.json?v=20260718-4').then(r => r.json()).then(data => products = data).catch(() => { $('#startButton').textContent = 'データを読み込めません'; $('#startButton').disabled = true; });
 $('#startButton').onclick = () => { $('#startScreen').classList.add('hidden'); $('#quizScreen').classList.remove('hidden'); renderQuestion(); };
 $('#backButton').onclick = () => { if (current) { current--; answers.pop(); renderQuestion(); } };
 $('#restartButton').onclick = () => location.reload();

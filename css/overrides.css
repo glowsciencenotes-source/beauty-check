@@ -2,4 +2,10 @@
 .product-number{display:none!important}
 .card-category{color:var(--coral);font-size:12px;font-weight:700;letter-spacing:.07em;margin:0 0 10px}
 .share{background:var(--coral);color:#fff;margin-right:8px}
-@media(max-width:760px){.share{margin:0 0 12px}}
+.compact{grid-template-columns:repeat(5,1fr);gap:12px}
+.compact .product-card{padding:14px;box-shadow:none}
+.compact .product-card h4{font-size:13px}
+.compact .brand-name,.compact .category,.compact .ingredient-label,.compact .ingredients,.compact .card-links a{font-size:10px}
+.compact .card-category{font-size:10px;margin-bottom:6px}
+@media(max-width:900px){.compact{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:760px){.share{margin:0 0 12px}.compact{grid-template-columns:1fr}}
