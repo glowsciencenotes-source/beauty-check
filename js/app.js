@@ -13,7 +13,7 @@ const questions = [
 
 const $ = selector => document.querySelector(selector);
 let products = [], current = 0, answers = [], result;
-fetch('data/products.json').then(r => r.json()).then(data => products = data).catch(() => { $('#startButton').textContent = 'データを読み込めません'; $('#startButton').disabled = true; });
+fetch('data/products.json?v=20260718-3').then(r => r.json()).then(data => products = data).catch(() => { $('#startButton').textContent = 'データを読み込めません'; $('#startButton').disabled = true; });
 $('#startButton').onclick = () => { $('#startScreen').classList.add('hidden'); $('#quizScreen').classList.remove('hidden'); renderQuestion(); };
 $('#backButton').onclick = () => { if (current) { current--; answers.pop(); renderQuestion(); } };
 $('#restartButton').onclick = () => location.reload();
@@ -55,8 +55,7 @@ function uniqueCategoryRecommendations() {
 function productCard(product, recommended = false) {
   const query = encodeURIComponent(`${product.brand} ${product.name}`);
   const affiliate = `https://www.amazon.co.jp/s?k=${query}&tag=YOUR_ASSOCIATE_TAG-22`;
-  const reason = recommended ? `<p class="reason">あなたの肌傾向に合わせて選びました。</p>` : '';
-  return `<article class="product-card ${recommended ? 'recommended' : ''}"><p class="category card-category">${product.category}</p><p class="brand-name">${product.brand}</p><h4>${product.name}</h4><p class="ingredient-label">主な配合成分</p><p class="ingredients">${product.ingredients}</p>${reason}<div class="card-links"><a class="affiliate" href="${affiliate}" target="_blank" rel="noopener sponsored">購入リンク →</a></div></article>`;
+  return `<article class="product-card ${recommended ? 'recommended' : ''}"><p class="category card-category">${product.category}</p><p class="brand-name">${product.brand}</p><h4>${product.name}</h4><p class="ingredient-label">主な配合成分</p><p class="ingredients">${product.ingredients}</p><div class="card-links"><a class="affiliate" href="${affiliate}" target="_blank" rel="noopener sponsored">購入リンク →</a></div></article>`;
 }
 function renderProducts() { $('#allProductList').innerHTML = rankProducts(products).slice(0, 5).map(product => productCard(product)).join(''); }
 $('#shareButton').onclick = async () => { if (!result) return; const text = `30秒 肌チェックの結果は「${result.labels[result.type]}」でした。\n自分に合うスキンケアをチェック → ${location.href}`; try { if (navigator.share) await navigator.share({ title: '30秒 肌チェック', text, url: location.href }); else { await navigator.clipboard.writeText(text); $('#shareButton').textContent = '結果をコピーしました ✓'; setTimeout(() => $('#shareButton').textContent = '結果をシェアする ↗', 2200); } } catch (error) { if (error.name !== 'AbortError') window.prompt('この内容をコピーしてシェアできます', text); } };
