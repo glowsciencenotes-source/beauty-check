@@ -1,5 +1,6 @@
 /* 結果カードの調整 */
 .product-number{display:none!important}
+.reason{display:none!important}
 .card-category{color:var(--coral);font-size:12px;font-weight:700;letter-spacing:.07em;margin:0 0 10px}
 .share{background:var(--coral);color:#fff;margin-right:8px}
 .compact{grid-template-columns:repeat(5,1fr);gap:12px}
