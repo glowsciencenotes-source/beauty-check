@@ -1,0 +1,148 @@
+/* ==========================================
+   Reset CSS Ver2.0
+========================================== */
+
+*,
+*::before,
+*::after{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    font-size:16px;
+    scroll-behavior:smooth;
+    -webkit-text-size-adjust:100%;
+}
+
+body{
+
+    min-height:100vh;
+
+    font-family:
+        "Noto Sans JP",
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    line-height:1.6;
+
+    color:#1d1d1f;
+
+    background:#f5f5f7;
+
+    -webkit-font-smoothing:antialiased;
+
+    text-rendering:optimizeLegibility;
+
+}
+
+img{
+
+    display:block;
+
+    max-width:100%;
+
+    height:auto;
+
+    border:0;
+
+}
+
+picture{
+
+    display:block;
+
+}
+
+button{
+
+    border:none;
+
+    background:none;
+
+    cursor:pointer;
+
+    font:inherit;
+
+}
+
+input,
+textarea,
+select{
+
+    font:inherit;
+
+    outline:none;
+
+}
+
+a{
+
+    color:inherit;
+
+    text-decoration:none;
+
+}
+
+ul,
+ol{
+
+    list-style:none;
+
+}
+
+table{
+
+    border-collapse:collapse;
+
+    border-spacing:0;
+
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+
+    font-weight:700;
+
+}
+
+p{
+
+    word-break:break-word;
+
+}
+
+main{
+
+    display:block;
+
+}
+
+section{
+
+    position:relative;
+
+}
+
+:focus-visible{
+
+    outline:3px solid #0071e3;
+
+    outline-offset:3px;
+
+}
+
+::selection{
+
+    background:#0071e3;
+
+    color:#fff;
+
+}

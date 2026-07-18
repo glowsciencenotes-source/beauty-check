@@ -1,0 +1,200 @@
+{
+  "version": "2.0",
+
+  "questions": [
+
+    {
+      "id": 1,
+
+      "title": "洗顔後の肌はどうなりますか？",
+
+      "description": "もっとも近いものを選んでください",
+
+      "category": "moisture",
+
+      "answers":[
+
+        {
+
+          "text":"すぐにつっぱる",
+
+          "score":{
+
+            "moisture":15,
+
+            "sensitive":5,
+
+            "aging":3
+
+          },
+
+          "ingredients":[
+
+            "セラミド",
+
+            "ヒアルロン酸"
+
+          ],
+
+          "avoid":[
+
+            "エタノール"
+
+          ]
+
+        },
+
+        {
+
+          "text":"少し乾燥する",
+
+          "score":{
+
+            "moisture":10,
+
+            "sensitive":2
+
+          },
+
+          "ingredients":[
+
+            "ヒアルロン酸"
+
+          ],
+
+          "avoid":[]
+
+        },
+
+        {
+
+          "text":"変わらない",
+
+          "score":{
+
+            "moisture":3
+
+          },
+
+          "ingredients":[],
+
+          "avoid":[]
+
+        },
+
+        {
+
+          "text":"ベタつく",
+
+          "score":{
+
+            "sebum":10
+
+          },
+
+          "ingredients":[
+
+            "ナイアシンアミド"
+
+          ],
+
+          "avoid":[
+
+            "高油分"
+
+          ]
+
+        }
+
+      ]
+
+    },
+
+    {
+
+      "id":2,
+
+      "title":"午後になるとテカりますか？",
+
+      "category":"sebum",
+
+      "answers":[
+
+        {
+
+          "text":"かなりテカる",
+
+          "score":{
+
+            "sebum":15,
+
+            "pore":8,
+
+            "acne":8
+
+          },
+
+          "ingredients":[
+
+            "ビタミンC誘導体",
+
+            "アゼライン酸"
+
+          ],
+
+          "avoid":[
+
+            "高油分"
+
+          ]
+
+        },
+
+        {
+
+          "text":"少しテカる",
+
+          "score":{
+
+            "sebum":8,
+
+            "pore":4
+
+          },
+
+          "ingredients":[
+
+            "ナイアシンアミド"
+
+          ],
+
+          "avoid":[]
+
+        },
+
+        {
+
+          "text":"ほとんどテカらない",
+
+          "score":{
+
+            "moisture":5
+
+          },
+
+          "ingredients":[
+
+            "セラミド"
+
+          ],
+
+          "avoid":[]
+
+        }
+
+      ]
+
+    }
+
+  ]
+}

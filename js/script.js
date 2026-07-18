@@ -1,677 +1,653 @@
-/* ==========================================
-   30秒肌診断
-   script.js Part1
-========================================== */
+/*
+==================================================
+30秒肌診断
+Main Script
+Version 3.0
+==================================================
+*/
 
-const questions = [
+/*
+----------------------------------
+状態管理
+----------------------------------
+*/
 
-{
-title:"洗顔後の肌は？",
-answers:[
-{text:"つっぱる",type:"dry"},
-{text:"ベタつく",type:"oily"},
-{text:"部分的につっぱる",type:"combination"},
-{text:"刺激を感じる",type:"sensitive"},
-{text:"特に変化なし",type:"normal"}
-]
-},
-
-{
-title:"日中のテカリは？",
-answers:[
-{text:"ほぼない",type:"dry"},
-{text:"かなりある",type:"oily"},
-{text:"Tゾーンだけ",type:"combination"},
-{text:"肌荒れしやすい",type:"sensitive"},
-{text:"普通",type:"normal"}
-]
-},
-
-{
-title:"毛穴の状態は？",
-answers:[
-{text:"目立たない",type:"dry"},
-{text:"かなり目立つ",type:"oily"},
-{text:"鼻だけ目立つ",type:"combination"},
-{text:"赤くなりやすい",type:"sensitive"},
-{text:"普通",type:"normal"}
-]
-},
-
-{
-title:"化粧崩れは？",
-answers:[
-{text:"粉っぽくなる",type:"dry"},
-{text:"すぐ崩れる",type:"oily"},
-{text:"Tゾーンだけ",type:"combination"},
-{text:"刺激で崩れる",type:"sensitive"},
-{text:"普通",type:"normal"}
-]
-},
-
-{
-title:"肌荒れしやすい？",
-answers:[
-{text:"乾燥で荒れる",type:"dry"},
-{text:"ニキビができる",type:"oily"},
-{text:"場所による",type:"combination"},
-{text:"かなり敏感",type:"sensitive"},
-{text:"ほとんどない",type:"normal"}
-]
-},
-
-{
-title:"普段の肌状態は？",
-answers:[
-{text:"乾燥",type:"dry"},
-{text:"脂っぽい",type:"oily"},
-{text:"混在",type:"combination"},
-{text:"刺激に弱い",type:"sensitive"},
-{text:"安定",type:"normal"}
-]
-},
-
-{
-title:"季節の変わり目は？",
-answers:[
-{text:"乾燥する",type:"dry"},
-{text:"皮脂が増える",type:"oily"},
-{text:"部分的に変化",type:"combination"},
-{text:"肌荒れする",type:"sensitive"},
-{text:"変わらない",type:"normal"}
-]
-},
-
-{
-title:"保湿後は？",
-answers:[
-{text:"すぐ乾く",type:"dry"},
-{text:"ベタつく",type:"oily"},
-{text:"場所による",type:"combination"},
-{text:"刺激を感じる",type:"sensitive"},
-{text:"ちょうどいい",type:"normal"}
-]
-},
-
-{
-title:"メイク後は？",
-answers:[
-{text:"粉吹きする",type:"dry"},
-{text:"テカる",type:"oily"},
-{text:"部分的",type:"combination"},
-{text:"赤くなる",type:"sensitive"},
-{text:"普通",type:"normal"}
-]
-},
-
-{
-title:"今の肌悩みは？",
-answers:[
-{text:"乾燥",type:"dry"},
-{text:"皮脂",type:"oily"},
-{text:"両方",type:"combination"},
-{text:"刺激",type:"sensitive"},
-{text:"特にない",type:"normal"}
-]
-}
-
-];
-
-
-/* ==========================================
-   State
-========================================== */
+let questions = [];
+let products = [];
 
 let currentQuestion = 0;
-
 let answers = [];
 
-let scores = {
+let diagnosisResult = null;
 
-dry:0,
+/*
+----------------------------------
+画面取得
+----------------------------------
+*/
 
-oily:0,
+const screens = {
 
-combination:0,
+    home: document.getElementById("home"),
 
-sensitive:0,
+    quiz: document.getElementById("quiz"),
 
-normal:0
+    loading: document.getElementById("loading"),
+
+    result: document.getElementById("result")
 
 };
 
+/*
+----------------------------------
+ボタン
+----------------------------------
+*/
 
-/* ==========================================
-   DOM
-========================================== */
+const startBtn = document.getElementById("startBtn");
 
-const home=document.getElementById("home");
-const quiz=document.getElementById("quiz");
-const loading=document.getElementById("loading");
-const result=document.getElementById("result");
+const prevBtn = document.getElementById("prevBtn");
 
-const startBtn=document.getElementById("startBtn");
+const restartBtn = document.getElementById("restartBtn");
 
-const questionTitle=document.getElementById("questionTitle");
-const answersDiv=document.getElementById("answers");
+const shareBtn = document.getElementById("shareBtn");
 
-const questionCount=document.getElementById("questionCount");
-const progressFill=document.getElementById("progressFill");
-const progressPercent=document.getElementById("progressPercent");
+/*
+----------------------------------
+初期化
+----------------------------------
+*/
 
-const nextBtn=document.getElementById("nextBtn");
-const prevBtn=document.getElementById("prevBtn");
+window.addEventListener(
 
+    "DOMContentLoaded",
 
-/* ==========================================
-   Start
-========================================== */
+    initializeApp
 
-startBtn.addEventListener("click",()=>{
+);
 
-home.classList.remove("active");
+async function initializeApp(){
 
-quiz.classList.add("active");
+    await loadQuestions();
 
-renderQuestion();
+    await loadProducts();
 
-});
-
-
-/* ==========================================
-   Render Question
-========================================== */
-
-function renderQuestion(){
-
-const q=questions[currentQuestion];
-
-questionTitle.textContent=q.title;
-
-questionCount.textContent=
-`Question ${currentQuestion+1} / ${questions.length}`;
-
-const percent=
-((currentQuestion+1)/questions.length)*100;
-
-progressPercent.textContent=
-Math.round(percent)+"%";
-
-progressFill.style.width=
-percent+"%";
-
-answersDiv.innerHTML="";
-
-q.answers.forEach((item,index)=>{
-
-const btn=document.createElement("button");
-
-btn.className="answer";
-
-btn.textContent=item.text;
-
-btn.onclick=()=>selectAnswer(index);
-
-answersDiv.appendChild(btn);
-
-});
-
-}
-/* ==========================================
-   Answer Select
-========================================== */
-
-function selectAnswer(index){
-
-    // 選択状態を解除
-    document.querySelectorAll(".answer").forEach(btn=>{
-        btn.classList.remove("selected");
-    });
-
-    // 選択したボタンを光らせる
-    document.querySelectorAll(".answer")[index]
-        .classList.add("selected");
-
-    // 回答保存
-    answers[currentQuestion]=index;
-
-    // 0.3秒後に自動で次の質問へ
-    setTimeout(() => {
-
-        if(currentQuestion < questions.length - 1){
-
-            currentQuestion++;
-
-            renderQuestion();
-
-            restoreAnswer();
-
-        }else{
-
-            calculateScore();
-
-        }
-
-    },300);
+    bindEvents();
 
 }
 
+/*
+----------------------------------
+イベント
+----------------------------------
+*/
 
+function bindEvents(){
 
-/* ==========================================
-   Previous
-========================================== */
+    startBtn.addEventListener(
 
-prevBtn.addEventListener("click",()=>{
+        "click",
 
-    if(currentQuestion===0){
+        startQuiz
 
-        return;
+    );
 
-    }
+    prevBtn.addEventListener(
 
-    currentQuestion--;
+        "click",
 
-    renderQuestion();
+        previousQuestion
 
-    restoreAnswer();
+    );
 
-});
+    restartBtn.addEventListener(
 
-/* ==========================================
-   Restore
-========================================== */
+        "click",
 
-function restoreAnswer(){
+        restartQuiz
 
-    if(answers[currentQuestion]===undefined){
+    );
 
-        return;
+    shareBtn.addEventListener(
 
-    }
+        "click",
 
-    document
-        .querySelectorAll(".answer")
-        [answers[currentQuestion]]
-        .classList.add("selected");
+        shareResult
 
-}
-
-/* ==========================================
-   Calculate Score
-========================================== */
-
-function calculateScore(){
-
-    scores={
-
-        dry:0,
-        oily:0,
-        combination:0,
-        sensitive:0,
-        normal:0
-
-    };
-
-    questions.forEach((question,i)=>{
-
-        const answerIndex=answers[i];
-
-        const type=
-            question.answers[answerIndex].type;
-
-        scores[type]++;
-
-    });
-
-    home.classList.remove("active");
-    quiz.classList.remove("active");
-
-    loading.classList.add("active");
-
-    setTimeout(()=>{
-
-        loading.classList.remove("active");
-
-        result.classList.add("active");
-
-        showResult();
-
-    },2500);
+    );
 
 }
-/* ==========================================
-   Result Data
-========================================== */
+/*
+==================================================
+画面管理
+==================================================
+*/
 
-const skinTypes = {
+function hideAllScreens(){
 
-    dry:{
-        title:"乾燥肌",
-        description:"水分が不足しやすく、保湿を重視したケアがおすすめです。",
-        care:[
-            "朝晩しっかり保湿する",
-            "セラミド配合化粧品を選ぶ",
-            "熱いお湯で洗顔しない"
-        ],
-        ingredients:[
-            "セラミド",
-            "ヒアルロン酸",
-            "スクワラン",
-            "アミノ酸"
-        ]
-    },
+    Object.values(screens).forEach(screen=>{
 
-    oily:{
-        title:"脂性肌",
-        description:"皮脂量が多く、毛穴やテカリ対策が重要です。",
-        care:[
-            "皮脂を落としすぎない",
-            "ビタミンC配合を使う",
-            "ノンコメド処方を選ぶ"
-        ],
-        ingredients:[
-            "ビタミンC",
-            "ナイアシンアミド",
-            "アゼライン酸"
-        ]
-    },
+        if(screen){
 
-    combination:{
-        title:"混合肌",
-        description:"部位ごとに状態が異なるためバランスケアがおすすめです。",
-        care:[
-            "部分ごとに保湿量を調整",
-            "Tゾーンだけ皮脂対策",
-            "刺激の少ない化粧品を選ぶ"
-        ],
-        ingredients:[
-            "セラミド",
-            "ナイアシンアミド",
-            "グリセリン"
-        ]
-    },
-
-    sensitive:{
-        title:"敏感肌",
-        description:"刺激を避け、低刺激の保湿ケアがおすすめです。",
-        care:[
-            "アルコールを避ける",
-            "摩擦を減らす",
-            "低刺激処方を選ぶ"
-        ],
-        ingredients:[
-            "パンテノール",
-            "アラントイン",
-            "セラミド"
-        ]
-    },
-
-    normal:{
-        title:"普通肌",
-        description:"水分と皮脂のバランスが良い状態です。",
-        care:[
-            "今のケアを継続",
-            "紫外線対策を続ける",
-            "十分な保湿"
-        ],
-        ingredients:[
-            "ビタミンC",
-            "セラミド",
-            "ヒアルロン酸"
-        ]
-    }
-
-};
-
-
-/* ==========================================
-   Show Result
-========================================== */
-
-async function showResult(){
-
-    let resultType="normal";
-    let max=0;
-
-    Object.keys(scores).forEach(type=>{
-
-        if(scores[type]>max){
-
-            max=scores[type];
-            resultType=type;
+            screen.classList.remove("active");
 
         }
 
     });
 
-    const skin=skinTypes[resultType];
-    saveResult(resultType);
-    document.getElementById("skinType").textContent=
-        "あなたは「"+skin.title+"」です";
-
-    document.getElementById("skinDescription").textContent=
-        skin.description;
-
-    const care=document.getElementById("carePoint");
-
-    care.innerHTML="";
-
-    skin.care.forEach(item=>{
-
-        const li=document.createElement("li");
-
-        li.textContent=item;
-
-        care.appendChild(li);
-
-    });
-
-    const ingredients=document.getElementById("ingredientList");
-
-    ingredients.innerHTML="";
-
-    skin.ingredients.forEach(item=>{
-
-        const span=document.createElement("span");
-
-        span.textContent=item;
-
-        ingredients.appendChild(span);
-
-    });
-
-    loadProducts(resultType);
-
 }
 
+function showScreen(name){
 
-/* ==========================================
-   Load Products
-========================================== */
+    hideAllScreens();
 
-async function loadProducts(type){
+    if(screens[name]){
 
-    try{
-
-        const response=
-            await fetch("data/products.json");
-
-        const products=
-            await response.json();
-
-        const list=
-            document.getElementById("productList");
-
-        list.innerHTML="";
-
-        products
-        .filter(p=>p.skin.includes(type))
-        .slice(0,3)
-        .forEach(product=>{
-
-            list.innerHTML+=`
-
-            <div class="product-card">
-
-                <img
-                    class="product-image"
-                    src="${product.image}"
-                    alt="${product.name}">
-
-                <div class="product-body">
-
-                    <div class="product-brand">
-                        ${product.brand}
-                    </div>
-
-                    <div class="product-name">
-                        ${product.name}
-                    </div>
-
-                    <div class="product-price">
-                        ¥${product.price}
-                    </div>
-
-                    <div class="product-links">
-
-                        <a
-                        class="amazon"
-                        href="${product.amazon}"
-                        target="_blank">
-
-                        Amazonで見る
-
-                        </a>
-
-                        <a
-                        class="rakuten"
-                        href="${product.rakuten}"
-                        target="_blank">
-
-                        楽天市場で見る
-
-                        </a>
-
-                        <a
-                        class="yahoo"
-                        href="${product.yahoo}"
-                        target="_blank">
-
-                        Yahoo!ショッピング
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            `;
-
-        });
-
-    }
-
-    catch(e){
-
-        console.error(e);
+        screens[name].classList.add("active");
 
     }
 
 }
 
+/*
+==================================================
+診断開始
+==================================================
+*/
 
-/* ==========================================
-   Restart
-========================================== */
-
-document
-.getElementById("restartBtn")
-.addEventListener("click",()=>{
+function startQuiz(){
 
     currentQuestion=0;
 
     answers=[];
 
-    result.classList.remove("active");
+    showScreen("quiz");
 
-    home.classList.add("active");
+    renderQuestion();
 
-});
+}
 
+/*
+==================================================
+ローディング
+==================================================
+*/
 
-/* ==========================================
-   Share
-========================================== */
+function showLoading(){
 
-document
-.getElementById("shareBtn")
-.addEventListener("click",async()=>{
+    showScreen("loading");
 
-    if(navigator.share){
+}
 
-        await navigator.share({
+/*
+==================================================
+結果画面
+==================================================
+*/
 
-            title:"30秒肌診断",
+function showResultScreen(){
 
-            text:"私の肌タイプを診断しました！",
+    showScreen("result");
 
-            url:location.href
+}
 
-        });
+/*
+==================================================
+ホームへ戻る
+==================================================
+*/
 
-    }else{
+function showHome(){
 
-        navigator.clipboard.writeText(location.href);
+    showScreen("home");
 
-        alert("URLをコピーしました。");
+}
+/*
+==================================================
+質問表示
+==================================================
+*/
+
+function renderQuestion(){
+
+    const question = questions[currentQuestion];
+
+    if(!question){
+
+        finishQuiz();
+
+        return;
 
     }
 
-});
-/* ==========================================
-   Save Result
-========================================== */
+    /*
+    ----------------------
+    進捗
+    ----------------------
+    */
 
-function saveResult(type){
+    updateProgress();
 
-    const data = {
-        skinType: type,
-        date: new Date().toISOString()
-    };
+    /*
+    ----------------------
+    タイトル
+    ----------------------
+    */
 
-    localStorage.setItem(
-        "skinCheckResult",
-        JSON.stringify(data)
+    document.getElementById(
+
+        "questionTitle"
+
+    ).textContent = question.title;
+
+    /*
+    ----------------------
+    回答生成
+    ----------------------
+    */
+
+    renderAnswers(question);
+
+}
+
+/*
+==================================================
+回答生成
+==================================================
+*/
+
+function renderAnswers(question){
+
+    const area = document.getElementById(
+
+        "answers"
+
+    );
+
+    area.innerHTML = "";
+
+    question.answers.forEach(
+
+        (answer,index)=>{
+
+            const button =
+
+                document.createElement(
+
+                    "button"
+
+                );
+
+            button.className="answer-button";
+
+            button.innerHTML=`
+
+<div class="answer-text">
+
+${answer.text}
+
+</div>
+
+`;
+
+            button.onclick=()=>{
+
+                selectAnswer(
+
+                    index
+
+                );
+
+            };
+
+            area.appendChild(
+
+                button
+
+            );
+
+        }
+
     );
 
 }
+/*
+==================================================
+進捗バー
+==================================================
+*/
 
-/* ==========================================
-   Load Result
-========================================== */
+function updateProgress(){
 
-function loadSavedResult(){
+    const total = questions.length;
 
-    const data = localStorage.getItem("skinCheckResult");
+    const current = currentQuestion + 1;
 
-    if(!data) return null;
+    const percent = Math.round(
 
-    return JSON.parse(data);
+        current / total * 100
+
+    );
+
+    /*
+    ----------------------
+    問題番号
+    ----------------------
+    */
+
+    document.getElementById(
+
+        "questionCount"
+
+    ).textContent =
+
+        `Question ${current} / ${total}`;
+
+    /*
+    ----------------------
+    パーセント
+    ----------------------
+    */
+
+    document.getElementById(
+
+        "progressPercent"
+
+    ).textContent =
+
+        `${percent}%`;
+
+    /*
+    ----------------------
+    バー
+    ----------------------
+    */
+
+    document.getElementById(
+
+        "progressFill"
+
+    ).style.width =
+
+        `${percent}%`;
 
 }
-/* ==========================================
-   Save / Load Result
-========================================== */
 
-window.addEventListener("load", () => {
+/*
+==================================================
+回答集計
+==================================================
+*/
 
-    const saved = loadSavedResult();
+function analyzeAnswers(){
 
-    if (saved) {
-        console.log("前回の診断結果:", saved.skinType);
+    const score={
+
+        moisture:0,
+
+        sebum:0,
+
+        sensitive:0,
+
+        pore:0,
+
+        acne:0,
+
+        aging:0
+
+    };
+
+    answers.forEach(answer=>{
+
+        if(!answer)return;
+
+        const data=answer.answer.score;
+
+        if(!data)return;
+
+        Object.keys(data).forEach(key=>{
+
+            score[key]+=data[key];
+
+        });
+
+    });
+
+    return score;
+
+}
+
+/*
+==================================================
+商品採点
+==================================================
+*/
+
+function calculateProductScore(product, score){
+
+    let total = 0;
+
+    total += product.score.moisture * score.moisture;
+    total += product.score.sebum * score.sebum;
+    total += product.score.sensitive * score.sensitive;
+    total += product.score.pore * score.pore;
+    total += product.score.acne * score.acne;
+    total += product.score.aging * score.aging;
+
+    return total;
+
+}
+/*
+==================================================
+結果表示
+==================================================
+*/
+
+function renderResult(){
+
+    renderSkinType();
+
+    renderCare();
+
+    renderIngredients();
+
+    renderProducts();
+
+}
+/*
+==================================================
+結果表示
+==================================================
+*/
+
+function renderResult(){
+
+    renderSkinType();
+
+    renderCare();
+
+    renderIngredients();
+
+    renderProducts();
+
+}
+/*
+==================================================
+診断レポート
+==================================================
+*/
+
+function renderReport(){
+
+    renderSkinType();
+
+    renderRanking();
+
+    renderScoreTable();
+
+    renderIngredients();
+
+    renderAvoidIngredients();
+
+    renderCare();
+
+    renderAIComment();
+
+    renderProducts();
+
+}
+/*
+==================================================
+診断結果保存
+==================================================
+*/
+
+function saveDiagnosis(result){
+
+    localStorage.setItem(
+
+        "skinDiagnosis",
+
+        JSON.stringify(result)
+
+    );
+
+}
+/*
+==================================================
+前回結果取得
+==================================================
+*/
+
+function loadDiagnosisResult(){
+
+    const data=
+
+        localStorage.getItem(
+
+            "skinDiagnosis"
+
+        );
+
+    if(!data)return;
+
+    diagnosisResult=
+
+        JSON.parse(data);
+
+}
+loadDiagnosisResult();
+/*
+==================================================
+再診断
+==================================================
+*/
+
+function restartQuiz(){
+
+    answers=[];
+
+    currentQuestion=0;
+
+    diagnosisResult=null;
+
+    showHome();
+
+}
+
+/*
+==================================================
+お気に入り
+==================================================
+*/
+
+function addFavorite(id){
+
+    let list=
+
+        JSON.parse(
+
+            localStorage.getItem(
+
+                "favorite"
+
+            )||"[]"
+
+        );
+
+    if(
+
+        !list.includes(id)
+
+    ){
+
+        list.push(id);
+
     }
 
-});
+    localStorage.setItem(
+
+        "favorite",
+
+        JSON.stringify(list)
+
+    );
+
+}
+function getFavorite(){
+
+    return JSON.parse(
+
+        localStorage.getItem(
+
+            "favorite"
+
+        )||"[]"
+
+    );
+
+}
+async function loadProducts(){
+
+    try{
+
+        const res=
+
+            await fetch(
+
+                "data/products.json"
+
+            );
+
+        products=
+
+            await res.json();
+
+    }
+
+    catch(error){
+
+        alert(
+
+            "商品データの読み込みに失敗しました"
+
+        );
+
+    }
+
+}
+window.addEventListener(
+
+    "beforeunload",
+
+    ()=>{
+
+        saveDiagnosis(
+
+            diagnosisResult
+
+        );
+
+    }
+
+);

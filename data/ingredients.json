@@ -1,0 +1,202 @@
+[
+  {
+    "id": 1,
+    "name": "セラミド",
+    "category": "保湿",
+    "effect": ["保湿", "バリア機能改善"],
+    "skinTypes": ["乾燥肌", "敏感肌", "インナードライ肌"],
+    "avoidSkinTypes": [],
+    "irritation": "低",
+    "evidence": "高"
+  },
+  {
+    "id": 2,
+    "name": "ヒアルロン酸",
+    "category": "保湿",
+    "effect": ["保湿"],
+    "skinTypes": ["全肌質"],
+    "avoidSkinTypes": [],
+    "irritation": "低",
+    "evidence": "高"
+  },
+  {
+    "id": 3,
+    "name": "ナイアシンアミド",
+    "category": "美白",
+    "effect": ["美白", "シワ改善", "皮脂バランス"],
+    "skinTypes": ["乾燥肌", "脂性肌", "混合肌", "エイジング"],
+    "avoidSkinTypes": [],
+    "irritation": "低",
+    "evidence": "高"
+  },
+  {
+    "id": 4,
+    "name": "レチノール",
+    "category": "エイジング",
+    "effect": ["シワ改善", "毛穴改善"],
+    "skinTypes": ["エイジング"],
+    "avoidSkinTypes": ["敏感肌"],
+    "irritation": "高",
+    "evidence": "高"
+  },
+  {
+    "id": 5,
+    "name": "パンテノール",
+    "category": "肌荒れ",
+    "effect": ["肌荒れ防止", "保湿"],
+    "skinTypes": ["敏感肌", "乾燥肌"],
+    "avoidSkinTypes": [],
+    "irritation": "低",
+    "evidence": "高"
+  },
+  {
+    "id": 6,
+    "name": "アラントイン",
+    "category": "肌荒れ",
+    "effect": ["抗炎症"],
+    "skinTypes": ["敏感肌"],
+    "avoidSkinTypes": [],
+    "irritation": "低",
+    "evidence": "高"
+  },
+  {
+    "id": 7,
+    "name": "グリチルリチン酸ジカリウム",
+    "category": "抗炎症",
+    "effect": ["肌荒れ", "ニキビ"],
+    "skinTypes": ["敏感肌", "ニキビ肌"],
+    "avoidSkinTypes": [],
+    "irritation": "低",
+    "evidence": "高"
+  },
+  {
+    "id": 8,
+    "name": "ビタミンC誘導体",
+    "category": "美白",
+    "effect": ["毛穴", "美白", "皮脂抑制"],
+    "skinTypes": ["脂性肌", "混合肌"],
+    "avoidSkinTypes": [],
+    "irritation": "中",
+    "evidence": "高"
+  },
+  {
+    "id": 9,
+    "name": "アゼライン酸",
+    "category": "ニキビ",
+    "effect": ["ニキビ", "赤み"],
+    "skinTypes": ["脂性肌", "ニキビ肌"],
+    "avoidSkinTypes": [],
+    "irritation": "中",
+    "evidence": "高"
+  },
+  {
+    "id": 10,
+    "name": "サリチル酸",
+    "category": "角質ケア",
+    "effect": ["毛穴", "ニキビ"],
+    "skinTypes": ["脂性肌"],
+    "avoidSkinTypes": ["敏感肌"],
+    "irritation": "中",
+    "evidence": "高"
+  },
+  {
+    "id": 11,
+    "name": "スクワラン",
+    "category": "保湿",
+    "effect": ["保湿", "皮膚保護"],
+    "skinTypes": ["乾燥肌", "敏感肌"],
+    "avoidSkinTypes": [],
+    "irritation": "低",
+    "evidence": "高"
+  },
+  {
+    "id": 12,
+    "name": "コラーゲン",
+    "category": "保湿",
+    "effect": ["保湿"],
+    "skinTypes": ["乾燥肌"],
+    "avoidSkinTypes": [],
+    "irritation": "低",
+    "evidence": "中"
+  },
+  {
+    "id": 13,
+    "name": "トラネキサム酸",
+    "category": "美白",
+    "effect": ["美白", "肌荒れ"],
+    "skinTypes": ["乾燥肌", "普通肌"],
+    "avoidSkinTypes": [],
+    "irritation": "低",
+    "evidence": "高"
+  },
+  {
+    "id": 14,
+    "name": "ライスパワーNo.11",
+    "category": "保湿",
+    "effect": ["バリア改善", "保湿"],
+    "skinTypes": ["乾燥肌", "インナードライ肌"],
+    "avoidSkinTypes": [],
+    "irritation": "低",
+    "evidence": "高"
+  },
+  {
+    "id": 15,
+    "name": "ワセリン",
+    "category": "保護",
+    "effect": ["保護", "保湿"],
+    "skinTypes": ["乾燥肌", "敏感肌"],
+    "avoidSkinTypes": [],
+    "irritation": "低",
+    "evidence": "高"
+  },
+  {
+    "id": 16,
+    "name": "グリセリン",
+    "category": "保湿",
+    "effect": ["保湿"],
+    "skinTypes": ["全肌質"],
+    "avoidSkinTypes": [],
+    "irritation": "低",
+    "evidence": "高"
+  },
+  {
+    "id": 17,
+    "name": "エタノール",
+    "category": "溶剤",
+    "effect": ["清涼感"],
+    "skinTypes": [],
+    "avoidSkinTypes": ["敏感肌", "乾燥肌"],
+    "irritation": "中",
+    "evidence": "高"
+  },
+  {
+    "id": 18,
+    "name": "香料",
+    "category": "添加物",
+    "effect": [],
+    "skinTypes": [],
+    "avoidSkinTypes": ["敏感肌"],
+    "irritation": "中",
+    "evidence": "中"
+  },
+  {
+    "id": 19,
+    "name": "メントール",
+    "category": "清涼剤",
+    "effect": ["冷感"],
+    "skinTypes": [],
+    "avoidSkinTypes": ["敏感肌"],
+    "irritation": "高",
+    "evidence": "高"
+  },
+  {
+    "id": 20,
+    "name": "ペプチド",
+    "category": "エイジング",
+    "effect": ["ハリ", "弾力"],
+    "skinTypes": ["エイジング"],
+    "avoidSkinTypes": [],
+    "irritation": "低",
+    "evidence": "中"
+  }
+]

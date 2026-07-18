@@ -2,423 +2,658 @@
 <html lang="ja">
 
 <head>
+
+    <!-- ==========================================
+         Basic
+    =========================================== -->
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>30秒肌診断 | あなたにぴったりのスキンケアを診断</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-    <meta name="description"
-        content="10個の質問に答えるだけ。30秒であなたの肌タイプを診断し、おすすめスキンケア商品をご紹介します。">
+    <title>30秒肌診断｜あなたに合うスキンケア診断</title>
 
-    <meta name="theme-color" content="#ffffff">
+    <meta
+        name="description"
+        content="30秒・10問であなたの肌タイプを診断。肌状態を分析し、最適なスキンケア・美容成分・おすすめ商品をご提案します。">
 
-    <link rel="icon" href="favicon.svg">
+    <meta
+        name="theme-color"
+        content="#ffffff">
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta
+        name="robots"
+        content="index,follow">
 
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
+    <link
+        rel="icon"
+        href="favicon.svg">
+
+    <!-- ==========================================
+         Open Graph
+    =========================================== -->
+
+    <meta
+        property="og:type"
+        content="website">
+
+    <meta
+        property="og:title"
+        content="30秒肌診断">
+
+    <meta
+        property="og:description"
+        content="あなたの肌タイプを30秒で診断">
+
+    <meta
+        property="og:image"
+        content="images/ogp.jpg">
+
+    <!-- ==========================================
+         Fonts
+    =========================================== -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
         rel="stylesheet">
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <!-- ==========================================
+         CSS
+    =========================================== -->
+
+    <link
+        rel="stylesheet"
+        href="css/reset.css">
+
+    <link
+        rel="stylesheet"
+        href="css/style.css">
+
 </head>
 
 <body>
 
-    <!-- 背景 -->
-    <div class="background-gradient"></div>
+<!-- ==========================================
+     Background
+========================================== -->
 
-    <!-- 全体 -->
-    <main class="app">
+<div class="background"></div>
 
-        <!-- ===========================
-             Hero
-        ============================ -->
+<div class="background-blur"></div>
 
-        <section id="home" class="screen active">
+<!-- ==========================================
+     App
+========================================== -->
 
-            <div class="hero">
+<main class="app">
 
-                <div class="hero-logo">
+<!-- ==========================================
+     HOME
+========================================== -->
 
-                    <span class="apple-icon">
-                        🍎
-                    </span>
+<section
+    id="home"
+    class="screen active">
 
-                    <span>
-                        Apple Style Skin Check
-                    </span>
+<div class="hero">
 
-                </div>
+<div class="hero-top">
 
-                <h1>
+<div class="logo">
 
-                    30秒肌診断
+🍎
 
-                </h1>
+<span>
 
-                <p class="hero-text">
+30秒肌診断
 
-                    10個の質問に答えるだけで<br>
+</span>
 
-                    あなたの肌タイプを診断し、
+</div>
 
-                    あなたに合うスキンケア商品をご提案します。
+</div>
 
-                </p>
+<h1>
 
-                <button
-                    id="startBtn"
-                    class="primary-button">
+あなたの肌に、
+本当に合うスキンケアを。
 
-                    診断をはじめる
+</h1>
 
-                </button>
+<p class="hero-description">
 
-                <div class="hero-cards">
+10個の質問に答えるだけ。
 
-                    <div class="hero-card">
+AIではなく美容理論に基づいて
+あなたの肌状態を分析し、
+最適なスキンケア商品をご提案します。
 
-                        <div class="hero-number">
+</p>
 
-                            30秒
+<button
+    id="startBtn"
+    class="primary-button">
 
-                        </div>
+診断をはじめる
 
-                        <div class="hero-label">
+</button>
 
-                            診断時間
+<!-- Feature -->
 
-                        </div>
+<div class="hero-features">
 
-                    </div>
+<div class="feature">
 
-                    <div class="hero-card">
+<div class="feature-number">
 
-                        <div class="hero-number">
+30秒
 
-                            10問
+</div>
 
-                        </div>
+<div class="feature-title">
 
-                        <div class="hero-label">
+診断時間
 
-                            質問数
+</div>
 
-                        </div>
+</div>
 
-                    </div>
+<div class="feature">
 
-                    <div class="hero-card">
+<div class="feature-number">
 
-                        <div class="hero-number">
+10問
 
-                            5種類
+</div>
 
-                        </div>
+<div class="feature-title">
 
-                        <div class="hero-label">
+質問数
 
-                            肌タイプ
+</div>
 
-                        </div>
+</div>
 
-                    </div>
+<div class="feature">
 
-                </div>
+<div class="feature-number">
+
+100点
+
+</div>
+
+<div class="feature-title">
+
+分析方式
+
+</div>
+
+</div>
+
+<div class="feature">
+
+<div class="feature-number">
+
+300+
+
+</div>
+
+<div class="feature-title">
+
+対応商品
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Scroll -->
+
+<div class="scroll-guide">
+
+↓
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ==========================================
+     Quiz
+     Part2へ続く
+========================================== -->
+<section
+    id="quiz"
+    class="screen">
+
+    <div class="quiz-container">
+
+        <!-- Progress -->
+
+        <div class="progress-wrapper">
+
+            <div class="progress-header">
+
+                <span
+                    id="questionCount">
+
+                    Question 1 / 10
+
+                </span>
+
+                <span
+                    id="progressPercent">
+
+                    10%
+
+                </span>
 
             </div>
 
-        </section>
-
-        <!-- ===========================
-             Quiz Screen
-             （Part2へ続く）
-        ============================ -->
-        <section id="quiz" class="screen">
-
-            <div class="quiz-container">
-
-                <!-- プログレス -->
-
-                <div class="progress-area">
-
-                    <div class="progress-top">
-
-                        <span id="questionCount">
-
-                            Question 1 / 10
-
-                        </span>
-
-                        <span id="progressPercent">
-
-                            10%
-
-                        </span>
-
-                    </div>
-
-                    <div class="progress-bar">
-
-                        <div
-                            id="progressFill"
-                            class="progress-fill">
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <!-- 質問 -->
-
-                <div class="question-card">
-
-                    <h2 id="questionTitle">
-
-                        ここに質問が表示されます
-
-                    </h2>
-
-                    <p class="question-description">
-
-                        あなたに近いものを1つ選んでください
-
-                    </p>
-
-                </div>
-
-                <!-- 回答 -->
+            <div class="progress-bar">
 
                 <div
-                    id="answers"
-                    class="answers">
-
-                    <!-- JavaScriptで生成 -->
-
-                </div>
-
-                <!-- ナビゲーション -->
-
-                <div class="navigation">
-
-                    <button
-                        id="prevBtn"
-                        class="secondary-button">
-
-                        ← 戻る
-
-                    </button>
-
-                    <button id="nextBtn" style="display:none;">
-
-                        次へ →
-
-                    </button>
+                    id="progressFill"
+                    class="progress-fill">
 
                 </div>
 
             </div>
-
-        </section>
-
-        <!-- ===========================
-             Loading
-        ============================ -->
-
-        <section
-            id="loading"
-            class="screen">
-
-            <div class="loading-box">
-
-                <div class="spinner"></div>
-
-                <h2>
-
-                    診断しています
-
-                </h2>
-
-                <p>
-
-                    あなたに最適なスキンケアを分析しています...
-
-                </p>
-
-                <div class="loading-step">
-
-                    <div class="loading-item">
-
-                        ✔ 肌状態を解析
-
-                    </div>
-
-                    <div class="loading-item">
-
-                        ✔ 肌タイプを判定
-
-                    </div>
-
-                    <div class="loading-item">
-
-                        ✔ おすすめ商品を選定
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-        <!-- ===========================
-             Result
-             （Part3へ続く）
-        ============================ -->
-        <section id="result" class="screen">
-
-            <div class="result-container">
-
-                <div class="result-header">
-
-                    <span class="result-badge">
-                        診断結果
-                    </span>
-
-                    <h2 id="skinType">
-                        あなたは「乾燥肌タイプ」です
-                    </h2>
-
-                    <p id="skinDescription">
-                        肌タイプの説明がここに表示されます。
-                    </p>
-
-                </div>
-
-                <!-- ケアポイント -->
-
-                <div class="care-card">
-
-                    <h3>
-                        おすすめスキンケア
-                    </h3>
-
-                    <ul id="carePoint">
-
-                    </ul>
-
-                </div>
-
-                <!-- 成分 -->
-
-                <div class="ingredient-card">
-
-                    <h3>
-                        おすすめ成分
-                    </h3>
-
-                    <div id="ingredientList"
-                        class="ingredient-list">
-
-                    </div>
-
-                </div>
-
-                <!-- 商品 -->
-
-                <div class="products">
-
-                    <h3>
-
-                        あなたへのおすすめ商品
-
-                    </h3>
-
-                    <div
-                        id="productList"
-                        class="product-list">
-
-                    </div>
-
-                </div>
-
-                <!-- ボタン -->
-
-                <div class="result-buttons">
-
-                    <button
-                        id="restartBtn"
-                        class="secondary-button">
-
-                        もう一度診断する
-
-                    </button>
-
-                    <button
-                        id="shareBtn"
-                        class="primary-button">
-
-                        結果をシェア
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-    <!-- ===========================
-         Footer
-    ============================ -->
-
-    <footer class="footer">
-
-        <div class="footer-inner">
-
-            <p>
-
-                © 2026 30秒肌診断
-
-            </p>
-
-            <nav>
-
-                <a href="#">
-
-                    プライバシーポリシー
-
-                </a>
-
-                <a href="#">
-
-                    利用規約
-
-                </a>
-
-                <a href="#">
-
-                    お問い合わせ
-
-                </a>
-
-            </nav>
 
         </div>
 
-    </footer>
+        <!-- Question Card -->
 
-    <!-- ===========================
-         Script
-    ============================ -->
+        <article class="question-card">
 
-    <script src="js/script.js"></script>
+            <div class="question-number">
+
+                STEP
+
+                <span id="stepNumber">
+
+                    1
+
+                </span>
+
+            </div>
+
+            <h2
+                id="questionTitle">
+
+                ここに質問が表示されます
+
+            </h2>
+
+            <p
+                class="question-description">
+
+                あなたに一番近いものを1つ選んでください。
+
+            </p>
+
+        </article>
+
+        <!-- Answers -->
+
+        <div
+            id="answers"
+            class="answers">
+
+            <!-- JavaScriptで生成 -->
+
+        </div>
+
+        <!-- Navigation -->
+
+        <div class="navigation">
+
+            <button
+                id="prevBtn"
+                class="secondary-button">
+
+                ← 前の質問
+
+            </button>
+
+        </div>
+
+        <!-- Progress Message -->
+
+        <div class="quiz-footer">
+
+            <div class="quiz-message">
+
+                あと
+
+                <span id="remainCount">
+
+                    9
+
+                </span>
+
+                問で診断完了です
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ==========================================
+     Loading
+========================================== -->
+
+<section
+    id="loading"
+    class="screen">
+
+    <div class="loading-container">
+
+        <div class="loading-logo">
+
+            🍎
+
+        </div>
+
+        <div class="spinner"></div>
+
+        <h2>
+
+            あなたの肌を解析しています
+
+        </h2>
+
+        <p>
+
+            回答内容を分析し、
+            最適なスキンケアを選定しています。
+
+        </p>
+
+        <div class="loading-status">
+
+            <div class="loading-item">
+
+                ✔ 水分バランス解析
+
+            </div>
+
+            <div class="loading-item">
+
+                ✔ 皮脂バランス解析
+
+            </div>
+
+            <div class="loading-item">
+
+                ✔ バリア機能解析
+
+            </div>
+
+            <div class="loading-item">
+
+                ✔ おすすめ商品選定
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ==========================================
+     Result
+     Part3へ続く
+========================================== -->
+<section
+    id="result"
+    class="screen">
+
+    <div class="result-container">
+
+        <!-- ==========================================
+             Header
+        =========================================== -->
+
+        <header class="result-header">
+
+            <span class="result-badge">
+
+                診断結果
+
+            </span>
+
+            <h2 id="skinType">
+
+                あなたは「乾燥性敏感肌」です
+
+            </h2>
+
+            <p id="skinDescription">
+
+                肌状態の説明がここに表示されます。
+
+            </p>
+
+        </header>
+
+        <!-- ==========================================
+             Skin Score
+        =========================================== -->
+
+        <section class="score-card">
+
+            <h3>
+
+                あなたの肌バランス
+
+            </h3>
+
+            <div id="scoreList">
+
+                <!-- JavaScriptで生成 -->
+
+            </div>
+
+        </section>
+
+        <!-- ==========================================
+             Care Advice
+        =========================================== -->
+
+        <section class="care-card">
+
+            <h3>
+
+                おすすめスキンケア
+
+            </h3>
+
+            <ul id="carePoint">
+
+            </ul>
+
+        </section>
+
+        <!-- ==========================================
+             Ingredients
+        =========================================== -->
+
+        <section class="ingredient-card">
+
+            <h3>
+
+                おすすめ美容成分
+
+            </h3>
+
+            <div
+                id="ingredientList"
+                class="ingredient-list">
+
+            </div>
+
+        </section>
+
+        <!-- ==========================================
+             Products
+        =========================================== -->
+
+        <section class="products">
+
+            <div class="section-title">
+
+                <h3>
+
+                    あなたへのおすすめ商品
+
+                </h3>
+
+                <p>
+
+                    診断結果からおすすめ順に表示しています
+
+                </p>
+
+            </div>
+
+            <div
+                id="productList"
+                class="product-list">
+
+            </div>
+
+        </section>
+
+        <!-- ==========================================
+             Result Action
+        =========================================== -->
+
+        <section class="result-buttons">
+
+            <button
+                id="restartBtn"
+                class="secondary-button">
+
+                もう一度診断する
+
+            </button>
+
+            <button
+                id="shareBtn"
+                class="primary-button">
+
+                診断結果をシェア
+
+            </button>
+
+        </section>
+
+    </div>
+
+</section>
+
+</main>
+
+<!-- ==========================================
+     Footer
+========================================== -->
+
+<footer class="footer">
+
+    <div class="footer-inner">
+
+        <div class="footer-logo">
+
+            🍎 30秒肌診断
+
+        </div>
+
+        <nav>
+
+            <a href="#">
+
+                プライバシーポリシー
+
+            </a>
+
+            <a href="#">
+
+                利用規約
+
+            </a>
+
+            <a href="#">
+
+                お問い合わせ
+
+            </a>
+
+        </nav>
+
+        <p>
+
+            © 2026 30秒肌診断 All Rights Reserved.
+
+        </p>
+
+    </div>
+
+</footer>
+
+<!-- ==========================================
+     JavaScript
+========================================== -->
+
+<!-- 質問データ -->
+<script src="js/questions.js" defer></script>
+
+<!-- 診断エンジン -->
+<script src="js/diagnosis.js" defer></script>
+
+<!-- 商品表示 -->
+<script src="js/products.js" defer></script>
+
+<!-- メイン処理 -->
+<script src="js/script.js" defer></script>
+
+<!-- ==========================================
+     Structured Data（SEO）
+========================================== -->
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"30秒肌診断",
+  "applicationCategory":"HealthApplication",
+  "operatingSystem":"Any",
+  "inLanguage":"ja",
+  "description":"30秒・10問で肌タイプを診断し、おすすめスキンケア商品をご紹介します。",
+  "offers":{
+    "@type":"Offer",
+    "price":"0",
+    "priceCurrency":"JPY"
+  }
+}
+</script>
 
 </body>
 

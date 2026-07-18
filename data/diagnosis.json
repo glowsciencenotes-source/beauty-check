@@ -1,0 +1,176 @@
+{
+  "version": "1.0",
+
+  "skinTypes": [
+
+    {
+      "id": "dry",
+
+      "name": "乾燥肌",
+
+      "description": "水分量・皮脂量ともに不足しやすく、つっぱり感や粉吹きが起こりやすい肌です。",
+
+      "condition": {
+        "moisture": 70,
+        "sebumMax": 40
+      },
+
+      "recommendIngredients": [
+        "セラミド",
+        "ヒアルロン酸",
+        "スクワラン",
+        "ライスパワーNo.11"
+      ],
+
+      "avoidIngredients": [
+        "エタノール"
+      ],
+
+      "care": [
+        "洗顔は朝晩やさしく行う",
+        "高保湿化粧水を使用する",
+        "乳液・クリームで水分を閉じ込める"
+      ]
+    },
+
+    {
+      "id": "oily",
+
+      "name": "脂性肌",
+
+      "description": "皮脂分泌が多く、テカリや毛穴詰まりが起こりやすい肌です。",
+
+      "condition": {
+        "sebum": 70
+      },
+
+      "recommendIngredients": [
+        "ナイアシンアミド",
+        "ビタミンC誘導体",
+        "アゼライン酸",
+        "サリチル酸"
+      ],
+
+      "avoidIngredients": [
+        "高油分クリーム"
+      ],
+
+      "care": [
+        "洗いすぎない",
+        "油分より水分補給を重視",
+        "ノンコメド処方を選ぶ"
+      ]
+    },
+
+    {
+      "id": "combination",
+
+      "name": "混合肌",
+
+      "description": "Tゾーンは皮脂が多く、頬は乾燥しやすいタイプです。",
+
+      "condition": {
+        "moisture": 50,
+        "sebum": 50
+      },
+
+      "recommendIngredients": [
+        "セラミド",
+        "ナイアシンアミド",
+        "ヒアルロン酸"
+      ],
+
+      "avoidIngredients": [],
+
+      "care": [
+        "部位ごとに保湿量を調整する",
+        "軽めの乳液を使用する"
+      ]
+    },
+
+    {
+      "id": "innerDry",
+
+      "name": "インナードライ肌",
+
+      "description": "表面は皮脂が多いものの、内部は乾燥している状態です。",
+
+      "condition": {
+        "moisture": 70,
+        "sebum": 60
+      },
+
+      "recommendIngredients": [
+        "セラミド",
+        "ライスパワーNo.11",
+        "ナイアシンアミド"
+      ],
+
+      "avoidIngredients": [
+        "アルコール"
+      ],
+
+      "care": [
+        "皮脂を取りすぎない",
+        "高保湿美容液を使用する"
+      ]
+    },
+
+    {
+      "id": "sensitive",
+
+      "name": "敏感肌",
+
+      "description": "刺激を受けやすく、赤みやかゆみが出やすい肌です。",
+
+      "condition": {
+        "sensitive": 70
+      },
+
+      "recommendIngredients": [
+        "パンテノール",
+        "アラントイン",
+        "グリチルリチン酸ジカリウム"
+      ],
+
+      "avoidIngredients": [
+        "香料",
+        "メントール",
+        "エタノール"
+      ],
+
+      "care": [
+        "低刺激処方を選ぶ",
+        "摩擦を避ける",
+        "紫外線対策を行う"
+      ]
+    },
+
+    {
+      "id": "aging",
+
+      "name": "エイジング肌",
+
+      "description": "ハリ不足や乾燥小じわが気になりやすい肌です。",
+
+      "condition": {
+        "aging": 70
+      },
+
+      "recommendIngredients": [
+        "レチノール",
+        "ナイアシンアミド",
+        "ペプチド"
+      ],
+
+      "avoidIngredients": [],
+
+      "care": [
+        "毎日UVケアを行う",
+        "夜は美容液を使用する",
+        "十分な保湿を行う"
+      ]
+    }
+
+  ]
+}
