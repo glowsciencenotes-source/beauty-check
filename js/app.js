@@ -13,7 +13,7 @@ const questions = [
 
 const $ = selector => document.querySelector(selector);
 let products = [], current = 0, answers = [], result;
-fetch('data/products.json?v=20260718-6').then(r => r.json()).then(data => products = data).catch(() => { $('#startButton').textContent = 'データを読み込めません'; $('#startButton').disabled = true; });
+fetch('data/products.json?v=20260719-1').then(r => r.json()).then(data => products = data).catch(() => { $('#startButton').textContent = 'データを読み込めません'; $('#startButton').disabled = true; });
 $('#startButton').onclick = () => { $('#startScreen').classList.add('hidden'); $('#quizScreen').classList.remove('hidden'); renderQuestion(); };
 $('#backButton').onclick = () => { if (current) { current--; answers.pop(); renderQuestion(); } };
 $('#restartButton').onclick = () => location.reload();
@@ -32,22 +32,22 @@ function renderQuestion() {
 
 function showResult() {
   const scores = answers.reduce((sum, key) => (sum[key] = (sum[key] || 0) + 1, sum), {});
-  const type = ['dry', 'combination', 'oily', 'normal'].sort((a, b) => (scores[b] || 0) - (scores[a] || 0))[0];
-  const labels = { dry: '乾燥が気になりやすい肌', combination: '混合肌傾向の肌', oily: '皮脂が出やすい肌', normal: 'バランスがとれた肌' };
-  const descriptions = { dry: 'うるおいを抱え込む保湿ケアを軸に。洗いすぎを避け、肌をやわらげるアイテムを重ねてみましょう。', combination: 'ベタつきやすい部分と乾きやすい部分が混在しやすい傾向です。軽い保湿をベースに、部分ごとに量を調整するのがコツ。', oily: '皮脂が出やすく、毛穴も気になりやすい傾向です。落としすぎず、みずみずしい保湿と紫外線対策を続けましょう。', normal: '比較的バランスのとれた状態です。季節や生活リズムによる変化を見ながら、保湿とUVケアを基本にしましょう。' };
+  const type = ['dry', 'combination', 'oily', 'normal', 'sensitive'].sort((a, b) => (scores[b] || 0) - (scores[a] || 0))[0];
+  const labels = { dry: '乾燥が気になりやすい肌', combination: '混合肌傾向の肌', oily: '皮脂が出やすい肌', normal: 'バランスがとれた肌', sensitive: '敏感に傾きやすい肌' };
+  const descriptions = { dry: 'うるおいを抱え込む保湿ケアを軸に。洗いすぎを避け、肌をやわらげるアイテムを重ねてみましょう。', combination: 'ベタつきやすい部分と乾きやすい部分が混在しやすい傾向です。軽い保湿をベースに、部分ごとに量を調整するのがコツ。', oily: '皮脂が出やすく、毛穴も気になりやすい傾向です。落としすぎず、みずみずしい保湿と紫外線対策を続けましょう。', normal: '比較的バランスのとれた状態です。季節や生活リズムによる変化を見ながら、保湿とUVケアを基本にしましょう。', sensitive: '肌がゆらぎやすい傾向です。摩擦を抑え、シンプルな保湿ケアを少量から試しましょう。' };
   result = { type, scores, labels };
   $('#quizScreen').classList.add('hidden'); $('#resultScreen').classList.remove('hidden');
   $('#resultTitle').innerHTML = `あなたは<span class="result-type">「${labels[type]}」</span>`;
   $('#resultDescription').textContent = descriptions[type];
   const tips = { dryness: '化粧水の後は、乳液やクリームでうるおいを閉じ込める', pores: '角質ケアは頻度を守り、保湿もセットで行う', oiliness: '皮脂を取りすぎず、軽い保湿を続ける', dullness: '紫外線対策と保湿を毎日の基本にする', spots: '日焼け止めは十分な量をこまめに塗り直す', sensitivity: '新しい製品は少量から。異常を感じたら使用を中止する', uv: '室内でも紫外線が気になる日はUVケアを取り入れる' };
-  const concerns = Object.entries(scores).filter(([key]) => !['dry', 'combination', 'oily', 'normal'].includes(key)).sort((a, b) => b[1] - a[1]).slice(0, 2).map(([key]) => key);
+  const concerns = Object.entries(scores).filter(([key]) => !['dry', 'combination', 'oily', 'normal', 'sensitive'].includes(key)).sort((a, b) => b[1] - a[1]).slice(0, 2).map(([key]) => key);
   $('#tips').innerHTML = [...new Set([...concerns, 'uv'])].slice(0, 3).map(key => `<span>✓ ${tips[key]}</span>`).join('');
   const recommended = uniqueCategoryRecommendations();
   $('#recommendationList').innerHTML = recommended.map(product => productCard(product, true)).join('');
   renderProducts(); window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function rankProducts(list) { return list.map(product => ({ product, score: (product.types.includes(result.type) ? 5 : 0) + product.concerns.reduce((n, concern) => n + (result.scores[concern] || 0), 0) })).sort((a, b) => b.score - a.score).map(item => item.product); }
+function rankProducts(list) { return list.map(product => ({ product, score: (product.types.includes(result.type) ? 20 : 0) + product.concerns.reduce((n, concern) => n + (result.scores[concern] || 0), 0) + (6 - (product.priority || 3)) })).sort((a, b) => b.score - a.score).map(item => item.product); }
 function uniqueCategoryRecommendations() {
   const bestByCategory = [...new Set(products.map(product => product.category))].map(category => rankProducts(products.filter(product => product.category === category))[0]);
   return rankProducts(bestByCategory).slice(0, 3);
